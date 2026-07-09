@@ -1,0 +1,24 @@
+{
+  "generatedAt": "2026-07-09T06:51:14.241Z",
+  "storeName": "燦坤五甲店 Apple Shop",
+  "subtitle": "Apple 授權經銷夥伴",
+  "items": "iPhone・Mac・iPad・Apple Watch 展示與諮詢・手機舊換新",
+  "phone": "07-7150122",
+  "email": "lanlin2070@icloud.com",
+  "address": "高雄市鳳山區五甲二路 219號",
+  "hours": "每日 11:00–21:30",
+  "lineUrl": "https://lin.ee/3QKmoSl",
+  "fbUrl": "https://www.facebook.com/AppleShop028",
+  "googleUrl": "https://maps.app.goo.gl/6aAR1sXfTRJzaP5D7?g_st=ic",
+  "brandColor": "#ffd500",
+  "ghOwner": "kristin2070",
+  "ghRepo": "appleshop",
+  "enableEmail": true,
+  "useSharedWorker": true,
+  "photoFile": "IMG_1272.jpg",
+  "computed": {
+    "namespace": "kristin2070-appleshop",
+    "landingUrl": "https://kristin2070.github.io/appleshop/",
+    "workerHost": "tsann-counter.magicbrian1206.workers.dev"
+  }
+}
