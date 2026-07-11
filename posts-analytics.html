@@ -413,6 +413,9 @@
     <label style="font-size:13px;color:var(--muted);margin-left:8px;display:flex;align-items:center;gap:4px;cursor:pointer" title="開啟後：新 CSV 會與舊資料智慧合併（同日/同貼文以新的為準，舊資料保留）；關閉則完全覆蓋">
       <input type="checkbox" id="merge-mode"> 🔀 合併模式
     </label>
+    <button id="export-btn" title="匯出所有資料為 JSON 備份">📤</button>
+    <button id="import-btn" title="匯入 JSON 備份">📥</button>
+    <input type="file" id="import-file" accept=".json" style="display:none">
     <button id="clear-btn" class="danger" title="清除此店家此平台的資料">🗑️</button>
   </div>
 </header>
@@ -1892,6 +1895,58 @@ document.querySelectorAll('.pf-btn').forEach(btn => {
     save();
     render();
   });
+});
+
+// ===== 匯出所有資料為 JSON =====
+document.getElementById('export-btn').addEventListener('click', () => {
+  const backup = { version: 1, exportedAt: new Date().toISOString(), store };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `AppleShop分析後台-備份-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('📤 已匯出備份');
+});
+
+// ===== 匯入 JSON 備份 =====
+document.getElementById('import-btn').addEventListener('click', () => {
+  document.getElementById('import-file').click();
+});
+document.getElementById('import-file').addEventListener('change', async e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    if (!data.store) throw new Error('備份檔格式錯誤');
+    const mode = confirm(
+      '📥 匯入備份\n\n' +
+      '按「確定」= 合併：加到現有資料上（相同店家以備份為準）\n' +
+      '按「取消」= 覆蓋：完全取代目前所有資料\n\n' +
+      '（新裝置第一次匯入時兩者相同）'
+    );
+    if (mode) {
+      Object.keys(data.store).forEach(shop => {
+        if (!store[shop]) store[shop] = { fb:{}, ig:{}, google:{} };
+        ['fb','ig','google'].forEach(pf => {
+          if (data.store[shop]?.[pf]) {
+            store[shop][pf] = { ...(store[shop][pf] || {}), ...data.store[shop][pf] };
+          }
+        });
+      });
+    } else {
+      store = data.store;
+    }
+    save();
+    render();
+    toast(`✅ 已匯入備份（${mode ? '合併' : '覆蓋'}模式）`);
+  } catch (err) {
+    console.error(err);
+    toast('❌ 匯入失敗：' + err.message, true);
+  }
+  e.target.value = '';
 });
 
 // 關鍵字 Modal
