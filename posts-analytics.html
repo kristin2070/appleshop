@@ -258,6 +258,14 @@
     font-weight: 600;
   }
 
+  /* 唯讀模式：隱藏所有編輯按鈕 */
+  body.readonly-mode #edit-reviews-btn,
+  body.readonly-mode #add-review-line-btn,
+  body.readonly-mode #edit-keywords-btn,
+  body.readonly-mode .del-review {
+    display: none !important;
+  }
+
   /* ============================
      📱 手機優化（≤ 640px）
      ============================ */
@@ -480,6 +488,9 @@ const SHOPS = [
   '新光華店', '台南永華二店', '台南中華店', '斗六店'
 ];
 const STORAGE_KEY = 'fb-analytics-v1';
+
+// ===== 唯讀模式判斷 =====
+const READONLY = new URLSearchParams(location.search).has('readonly');
 
 // ===== 狀態管理 =====
 let store = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
@@ -2033,7 +2044,83 @@ document.querySelectorAll('.pf-btn').forEach(b => {
   b.style.color = active ? 'white' : 'var(--text)';
 });
 
-render();
+// ===== 唯讀模式：套用限制 =====
+function applyReadonly() {
+  if (!READONLY) return;
+  document.body.classList.add('readonly-mode');
+  // 隱藏 CSV 上傳區
+  const uz = document.getElementById('upload-zone');
+  if (uz) uz.style.display = 'none';
+  // 隱藏頂部工具按鈕（合併/匯出/匯入/清除）
+  ['merge-mode','export-btn','import-btn','clear-btn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+    // 順便隱藏其父 label（merge-mode）
+    if (id === 'merge-mode' && el?.parentElement?.tagName === 'LABEL') {
+      el.parentElement.style.display = 'none';
+    }
+  });
+  // 標題顯示唯讀標記
+  const sub = document.querySelector('header .subtitle');
+  if (sub) sub.innerHTML += ' · <span style="color:var(--accent);font-weight:600">👀 唯讀模式</span>';
+}
+applyReadonly();
+
+// ===== 中央資料自動載入（data.json）=====
+async function loadCentralData() {
+  try {
+    const res = await fetch('data.json?t=' + Date.now(), { cache: 'no-cache' });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (e) {
+    return null;
+  }
+}
+
+// 頁面載入時，若有 data.json 就自動載入
+(async () => {
+  const central = await loadCentralData();
+  if (central && central.store) {
+    // 唯讀模式：完全用中央資料（不合併本機）
+    if (READONLY) {
+      store = central.store;
+      SHOPS.forEach(s => {
+        if (!store[s]) store[s] = { fb:{}, ig:{}, google:{} };
+        ['fb','ig','google'].forEach(pf => {
+          if (!store[s][pf]) store[s][pf] = {};
+        });
+      });
+    } else {
+      // 管理員模式：詢問是否要載入
+      const hasLocal = Object.values(store).some(s =>
+        s.fb?.posts || s.ig?.posts || s.google?.perf
+      );
+      if (!hasLocal) {
+        // 本機沒資料，直接載入中央
+        store = central.store;
+        SHOPS.forEach(s => {
+          if (!store[s]) store[s] = { fb:{}, ig:{}, google:{} };
+          ['fb','ig','google'].forEach(pf => {
+            if (!store[s][pf]) store[s][pf] = {};
+          });
+        });
+        save();
+      }
+    }
+    // 更新時間顯示
+    if (central.exportedAt) {
+      const time = new Date(central.exportedAt).toLocaleString('zh-TW');
+      const badge = document.createElement('div');
+      badge.style.cssText = 'text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px;padding:6px 12px;background:var(--card);border-radius:20px;display:inline-block';
+      badge.innerHTML = `📊 資料更新於：<b>${time}</b>${READONLY ? ' · 由 Kristin 統一維護' : ''}`;
+      const wrap = document.createElement('div');
+      wrap.style.textAlign = 'center';
+      wrap.appendChild(badge);
+      document.querySelector('header').after(wrap);
+    }
+  }
+  render();
+})();
 </script>
 </body>
 </html>
