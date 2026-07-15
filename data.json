@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "exportedAt": "2026-07-15T11:32:11.175Z",
+  "exportedAt": "2026-07-15T12:16:21.797Z",
   "store": {
     "五甲店": {
       "fb": {
@@ -11905,7 +11905,90 @@
           "directions": 404,
           "websiteClicks": 65
         },
-        "perfUpdated": "2026-07-15T11:19:01.983Z"
+        "perfUpdated": "2026-07-15T11:19:01.983Z",
+        "keywords": [
+          {
+            "word": "apple",
+            "count": 10000
+          },
+          {
+            "word": "全國電子",
+            "count": 2258
+          },
+          {
+            "word": "蘋果",
+            "count": 1879
+          },
+          {
+            "word": "apple store",
+            "count": 1785
+          },
+          {
+            "word": "mac",
+            "count": 1614
+          },
+          {
+            "word": "iphone",
+            "count": 531
+          },
+          {
+            "word": "蘋果電腦",
+            "count": 287
+          },
+          {
+            "word": "屏東apple直營店",
+            "count": 274
+          },
+          {
+            "word": "蘋果17",
+            "count": 228
+          },
+          {
+            "word": "蘋果手機",
+            "count": 93
+          },
+          {
+            "word": "apple 直 營 門市",
+            "count": 74
+          },
+          {
+            "word": "屏東全國電子",
+            "count": 70
+          },
+          {
+            "word": "蘋果直營店",
+            "count": 53
+          },
+          {
+            "word": "apple直營店",
+            "count": 50
+          },
+          {
+            "word": "耳機",
+            "count": 47
+          },
+          {
+            "word": "燦坤",
+            "count": 40
+          },
+          {
+            "word": "蘋果專賣店",
+            "count": 34
+          },
+          {
+            "word": "apple watch",
+            "count": 27
+          },
+          {
+            "word": "apple",
+            "count": 20
+          },
+          {
+            "word": "apple mac",
+            "count": 19
+          }
+        ],
+        "keywordsUpdated": "2026-07-15T12:16:10.952Z"
       }
     },
     "全國電子民族店": {
