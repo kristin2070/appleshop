@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "exportedAt": "2026-07-15T09:13:31.197Z",
+  "exportedAt": "2026-07-15T11:32:11.175Z",
   "store": {
     "五甲店": {
       "fb": {
@@ -11872,6 +11872,103 @@
       },
       "ig": {},
       "google": {}
+    },
+    "全國電子屏東店": {
+      "fb": {},
+      "ig": {},
+      "google": {
+        "profile": {
+          "businessName": "Apple Shop 屏東蘋果原廠店中店｜直營｜全國電子｜學生方案｜教育優惠｜福利品｜舊換新｜Apple｜Mac｜iPhone｜iPad｜Apple Watch 問現貨",
+          "address": "公園路48號",
+          "phone": "08 766 7151",
+          "website": "https://www.facebook.com/PINGTUNG.ELIFEMALL",
+          "category": "手機店",
+          "hoursMon": "11:00-21:30",
+          "hoursTue": "11:00-21:30",
+          "hoursWed": "11:00-21:30",
+          "hoursThu": "11:00-21:30",
+          "hoursFri": "11:00-21:30",
+          "hoursSat": "11:00-21:30",
+          "hoursSun": "11:00-21:30"
+        },
+        "profileUpdated": "2026-07-15T11:19:01.981Z",
+        "perf": {
+          "businessName": "Apple Shop 屏東蘋果原廠店中店｜直營｜全國電子｜學生方案｜教育優惠｜福利品｜舊換新｜Apple｜Mac｜iPhone｜iPad｜Apple Watch 問現貨",
+          "address": "900屏東縣屏東市公園路48號",
+          "searchMobile": 21447,
+          "searchDesktop": 7324,
+          "mapMobile": 6968,
+          "mapDesktop": 393,
+          "calls": 217,
+          "messages": 0,
+          "bookings": 0,
+          "directions": 404,
+          "websiteClicks": 65
+        },
+        "perfUpdated": "2026-07-15T11:19:01.983Z"
+      }
+    },
+    "全國電子民族店": {
+      "fb": {},
+      "ig": {},
+      "google": {
+        "profile": {
+          "businessName": "Apple Shop 3.0  全國電子民族館",
+          "address": "明誠一路838號1樓",
+          "phone": "07 347 7997",
+          "website": "",
+          "category": "3C 賣場",
+          "hoursMon": "11:00-21:30",
+          "hoursTue": "11:00-21:30",
+          "hoursWed": "11:00-21:30",
+          "hoursThu": "11:00-21:30",
+          "hoursFri": "11:00-21:30",
+          "hoursSat": "11:00-21:30",
+          "hoursSun": "11:00-21:30"
+        },
+        "profileUpdated": "2026-07-15T11:19:26.198Z",
+        "perf": {
+          "businessName": "Apple Shop 3.0  全國電子民族館",
+          "address": "807高雄市三民區明誠一路838號1樓",
+          "searchMobile": 2218,
+          "searchDesktop": 478,
+          "mapMobile": 18685,
+          "mapDesktop": 1072,
+          "calls": 201,
+          "messages": 0,
+          "bookings": 0,
+          "directions": 419,
+          "websiteClicks": 0
+        },
+        "perfUpdated": "2026-07-15T11:19:26.199Z",
+        "keywords": [
+          {
+            "word": "全國電子",
+            "count": 10000
+          },
+          {
+            "word": "apple",
+            "count": 2473
+          },
+          {
+            "word": "apple store",
+            "count": 1192
+          },
+          {
+            "word": "燦坤",
+            "count": 395
+          },
+          {
+            "word": "電子",
+            "count": 115
+          },
+          {
+            "word": "全國",
+            "count": 65
+          }
+        ],
+        "keywordsUpdated": "2026-07-15T11:20:39.812Z"
+      }
     }
   }
 }
