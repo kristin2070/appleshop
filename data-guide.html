@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>📥 資料收集 SOP · 燦坤 Apple Shop 分析後台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  :root {
+    --bg: #f2f2f7;
+    --card: #ffffff;
+    --text: #1c1c1e;
+    --muted: #6e6e73;
+    --border: #e5e5ea;
+    --accent: #007aff;
+    --success: #34c759;
+    --warning: #ff9500;
+    --danger: #ff3b30;
+    --purple: #af52de;
+    --fb: #1877f2;
+    --ig: #e4405f;
+    --google: #4285f4;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000;
+      --card: #1c1c1e;
+      --text: #f0f0f0;
+      --muted: #98989d;
+      --border: #2c2c2e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+    max-width: 820px;
+    line-height: 1.7;
+  }
+  header {
+    text-align: center;
+    padding: 24px 0 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  h1 {
+    font-size: 28px;
+    margin: 0 0 8px;
+    letter-spacing: -0.5px;
+  }
+  .lead {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 4px 0;
+  }
+  .quick-nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 18px;
+  }
+  .quick-nav a {
+    padding: 8px 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s;
+  }
+  .quick-nav a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  section {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border-top: 4px solid var(--accent);
+  }
+  section.fb    { border-top-color: var(--fb); }
+  section.ig    { border-top-color: var(--ig); }
+  section.google{ border-top-color: var(--google); }
+  section.deliver { border-top-color: var(--warning); }
+
+  h2 {
+    font-size: 22px;
+    margin: 0 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h2 .num {
+    color: white;
+    font-size: 15px;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    background: var(--accent);
+  }
+  section.fb h2 .num { background: var(--fb); }
+  section.ig h2 .num { background: var(--ig); }
+  section.google h2 .num { background: var(--google); }
+  section.deliver h2 .num { background: var(--warning); }
+
+  h3 {
+    font-size: 17px;
+    margin: 22px 0 10px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  section.fb h3 { color: var(--fb); }
+  section.ig h3 { color: var(--ig); }
+  section.google h3 { color: var(--google); }
+
+  .file-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: var(--bg);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    font-family: monospace;
+    margin: 2px 4px 2px 0;
+  }
+  .file-badge b { color: var(--text); }
+
+  ol.steps {
+    padding-left: 0;
+    list-style: none;
+    counter-reset: step;
+    margin: 12px 0;
+  }
+  ol.steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 12px 0 12px 44px;
+    border-bottom: 1px dashed var(--border);
+    font-size: 15px;
+  }
+  ol.steps li:last-child { border-bottom: none; }
+  ol.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 14px;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+  }
+  section.fb ol.steps li::before { background: var(--fb); }
+  section.ig ol.steps li::before { background: var(--ig); }
+  section.google ol.steps li::before { background: var(--google); }
+  section.deliver ol.steps li::before { background: var(--warning); }
+  ol.steps b { color: var(--accent); font-weight: 700; }
+  section.fb ol.steps b { color: var(--fb); }
+  section.ig ol.steps b { color: var(--ig); }
+  section.google ol.steps b { color: var(--google); }
+  code, .kbd {
+    background: var(--bg);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: -apple-system, "SF Mono", Menlo, monospace;
+    color: var(--purple);
+  }
+
+  .screenshot {
+    margin: 14px 0;
+    text-align: center;
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 12px;
+    border: 1px dashed var(--border);
+  }
+  .screenshot img {
+    max-width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.15);
+  }
+  .screenshot .caption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 8px;
+  }
+
+  .callout {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .callout.info    { background: rgba(0,122,255,.08);  border: 1px solid rgba(0,122,255,.25); }
+  .callout.success { background: rgba(52,199,89,.08);  border: 1px solid rgba(52,199,89,.3); }
+  .callout.warn    { background: rgba(255,149,0,.1);   border: 1px solid rgba(255,149,0,.35); }
+  .callout.danger  { background: rgba(255,59,48,.08);  border: 1px solid rgba(255,59,48,.3); }
+  .callout b { color: inherit; }
+
+  .file-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 14px 0;
+  }
+  .file-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: var(--bg);
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+  .file-item .icon { font-size: 24px; }
+  .file-item .info { flex: 1; }
+  .file-item .name { font-weight: 600; font-size: 14px; }
+  .file-item .desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    background: var(--bg);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  tr:last-child td { border-bottom: none; }
+
+  .summary-box {
+    background: linear-gradient(135deg, #007aff, #af52de);
+    color: white;
+    padding: 24px;
+    border-radius: 16px;
+    text-align: center;
+    margin: 30px 0;
+  }
+  .summary-box h3 { color: white; margin: 0 0 12px; font-size: 20px; }
+  .summary-box .items {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+  .summary-box .items > div {
+    background: rgba(255,255,255,.15);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+  }
+  .summary-box .items b {
+    display: block;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 3px;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* 手機 */
+  @media (max-width: 640px) {
+    body { padding: 16px 12px 60px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 18px; }
+    section { padding: 16px 18px; }
+    ol.steps li { padding-left: 40px; font-size: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📥 資料收集 SOP</h1>
+  <div class="lead">給各店 Apple Shop 管理員 · 每月定期回傳資料給 Kristin</div>
+  <div class="quick-nav">
+    <a href="#overview">🎯 總覽</a>
+    <a href="#fb">1️⃣ Facebook</a>
+    <a href="#ig">2️⃣ Instagram</a>
+    <a href="#google">3️⃣ Google 商家</a>
+    <a href="#keywords">4️⃣ 關鍵字</a>
+    <a href="#deliver">📤 交檔</a>
+  </div>
+</header>
+
+<!-- 總覽 -->
+<section id="overview">
+  <h2>🎯 這次要收集的資料清單</h2>
+  <p>每月定期把以下 <b>4 項資料</b> 從各平台匯出／複製，回傳給 Kristin 統一上傳到分析後台：</p>
+
+  <div class="file-list">
+    <div class="file-item">
+      <div class="icon">📘</div>
+      <div class="info">
+        <div class="name">Facebook — 每日互動 CSV</div>
+        <div class="desc">粉絲專頁層級每日資料（洞察報告 → 匯出）</div>
+      </div>
+    </div>
+    <div class="file-item">
+      <div class="icon">📘</div>
+      <div class="info">
+        <div class="name">Facebook — 貼文明細 CSV</div>
+        <div class="desc">每則貼文的觸及、互動、分享等（內容 → 匯出）</div>
+      </div>
+    </div>
+    <div class="file-item">
+      <div class="icon">📷</div>
+      <div class="info">
+        <div class="name">Instagram — 貼文明細 CSV</div>
+        <div class="desc">IG 貼文成效資料（洞察報告 → 內容 → 匯出）</div>
+      </div>
+    </div>
+    <div class="file-item">
+      <div class="icon">🌟</div>
+      <div class="info">
+        <div class="name">Google 商家 — 商家資訊 CSV</div>
+        <div class="desc">商家基本檔案</div>
+      </div>
+    </div>
+    <div class="file-item">
+      <div class="icon">🌟</div>
+      <div class="info">
+        <div class="name">Google 商家 — 深入分析 CSV</div>
+        <div class="desc">效能報表（GMB Insights）</div>
+      </div>
+    </div>
+    <div class="file-item">
+      <div class="icon">🔍</div>
+      <div class="info">
+        <div class="name">Google 商家 — 前 20 名搜尋關鍵字（複製文字）</div>
+        <div class="desc">從商家後台「效能 → 搜尋字詞統計」複製前 20 筆</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout info">
+    💡 <b>統一入口</b>：Facebook 與 Instagram 都在 <a href="https://business.facebook.com" target="_blank">business.facebook.com</a>；Google 商家在 <a href="https://business.google.com" target="_blank">business.google.com</a>。
+  </div>
+
+  <div class="callout warn">
+    ⚠️ <b>建議用電腦操作</b>（手機版介面沒有匯出功能）。用 Chrome 或 Safari 皆可，需擁有「粉專／商家管理員權限」。
+  </div>
+</section>
+
+<!-- FB -->
+<section class="fb" id="fb">
+  <h2><span class="num">1</span> 📘 Facebook（共 2 個 CSV）</h2>
+
+  <h3>📅 CSV ① — 每日互動</h3>
+  <p><b>位置</b>：Meta Business Suite → 洞察報告 → 匯出資料</p>
+
+  <ol class="steps">
+    <li>左側點選 <b>「1. 洞察報告」</b></li>
+    <li>子選單點 <b>「2. 內容」</b></li>
+    <li>右上角點 <b>「3. 匯出資料」</b></li>
+    <li>跳出視窗後照下方設定:
+      <ul>
+        <li>資料畫面：<b>每日</b>（第 1 步選這裡，其他會自動完成）</li>
+        <li>內容層級：<b>粉絲專頁</b></li>
+        <li>衡量指標預設值：點進去把 <b>2 個選項都勾起來</b></li>
+        <li>日期範圍：<b>2026/1/1 – 2026/6/30</b>（或最新月份）</li>
+      </ul>
+    </li>
+    <li>最後按 <b>「產生」</b> → 下載 CSV</li>
+  </ol>
+
+  <div class="screenshot">
+    <img src="guide-images/fb-daily-1.png" alt="Facebook 洞察報告匯出位置">
+    <div class="caption">① 洞察報告 → 匯出資料</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/fb-daily-2.png" alt="Facebook 每日 CSV 匯出設定">
+    <div class="caption">② 選「每日」+「粉絲專頁」+ 日期範圍 → 產生</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/fb-daily-3.png" alt="Facebook 每日 CSV 內容範例">
+    <div class="caption">③ 匯出後檔案內容範例（數字為主）</div>
+  </div>
+
+  <hr style="margin:26px 0;border:none;border-top:1px dashed var(--border)">
+
+  <h3>🔥 CSV ② — 貼文明細</h3>
+  <p><b>位置</b>：Meta Business Suite → 內容 → 貼文和 Reel → 匯出資料</p>
+
+  <ol class="steps">
+    <li>左側點 <b>「1. 內容」</b></li>
+    <li>子選單點 <b>「2. 貼文和 Reel」</b></li>
+    <li>右上角點 <b>「3. 匯出資料」</b></li>
+    <li>設定：
+      <ul>
+        <li>日期範圍：想匯出的區間</li>
+        <li>衡量指標預設值：<b>已發佈</b></li>
+        <li>資料畫面：<b>每日</b></li>
+        <li>內容層級：<b>貼文</b></li>
+        <li>篩選條件：<b>建立日期</b></li>
+      </ul>
+    </li>
+    <li>按 <b>「產生」</b> → 下載 CSV</li>
+  </ol>
+
+  <div class="screenshot">
+    <img src="guide-images/fb-posts-1.png" alt="Facebook 貼文明細匯出位置">
+    <div class="caption">① 內容 → 貼文和 Reel → 匯出資料</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/fb-posts-2.png" alt="Facebook 貼文明細匯出設定">
+    <div class="caption">② 匯出設定畫面</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/fb-posts-3.png" alt="Facebook 貼文明細內容範例">
+    <div class="caption">③ 匯出後可看到每則貼文明細</div>
+  </div>
+
+  <div class="callout success">
+    ✅ <b>完成 Facebook</b> — 你應該有 <b>2 個 CSV</b>：一個每日互動、一個貼文明細
+  </div>
+</section>
+
+<!-- IG -->
+<section class="ig" id="ig">
+  <h2><span class="num">2</span> 📷 Instagram（1 個 CSV）</h2>
+
+  <h3>📷 CSV ③ — IG 貼文明細</h3>
+  <p><b>位置</b>：Meta Business Suite → 洞察報告 → 內容 → 匯出資料 → 切到 Instagram 分頁</p>
+
+  <ol class="steps">
+    <li>左側點 <b>「1. 洞察報告」</b></li>
+    <li>子選單點 <b>「2. 內容」</b></li>
+    <li>右上角點 <b>「3. 匯出資料」</b></li>
+    <li>視窗上方分頁切到 <b>「4. Instagram」</b>（重要！預設是 Facebook）</li>
+    <li>設定：
+      <ul>
+        <li>帳號：選你的 IG 帳號</li>
+        <li>日期範圍：想匯出的區間</li>
+        <li>類型：<b>貼文</b>（影片、輪播廣告和相片貼文的資料）</li>
+      </ul>
+    </li>
+    <li>按 <b>「產生」</b> → 下載 CSV</li>
+  </ol>
+
+  <div class="screenshot">
+    <img src="guide-images/ig-posts.png" alt="Instagram 貼文匯出設定">
+    <div class="caption">記得切到 Instagram 分頁！</div>
+  </div>
+
+  <div class="callout success">
+    ✅ <b>完成 Instagram</b> — 你應該有 <b>1 個 CSV</b>：IG 貼文明細
+  </div>
+</section>
+
+<!-- Google -->
+<section class="google" id="google">
+  <h2><span class="num">3</span> 🌟 Google 商家（2 個 CSV）</h2>
+
+  <p><b>位置</b>：<a href="https://business.google.com" target="_blank">business.google.com</a>（Google 商家檔案管理工具）</p>
+
+  <h3>📋 CSV ④ + ⑤ — 商家資訊 & 深入分析</h3>
+
+  <ol class="steps">
+    <li>登入 Google 商家後台，選擇你的店家</li>
+    <li>在商家列表 <b>勾選你的店家</b>（左側 checkbox）</li>
+    <li>右上角出現 <b>「動作」</b> 下拉選單，點開</li>
+    <li>選 <b>「下載」</b> 底下的兩個項目：
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+        <span class="file-badge">📄 <b>商家資訊</b></span>
+        <span class="file-badge">📊 <b>深入分析</b></span>
+      </div>
+      <div style="font-size:13px;color:var(--muted);margin-top:6px">→ 這兩個檔案都要下載</div>
+    </li>
+    <li>格式選 <b>.csv（逗號分隔值）</b> → 下載</li>
+  </ol>
+
+  <div class="screenshot">
+    <img src="guide-images/google-1.png" alt="Google 商家勾選">
+    <div class="caption">① 勾選店家 → 右上角「動作」</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/google-2.png" alt="Google 下載選單">
+    <div class="caption">② 選「商家資訊」與「深入分析」（兩個都要）</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/google-3.png" alt="Google 下載格式">
+    <div class="caption">③ 格式選「.csv」→ 下載</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/google-4-a.png" alt="Google 下載完成兩個檔案 - 商家資訊">
+    <div class="caption">④ 完成後會下載到兩個 CSV：商家資訊</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/google-4-b.png" alt="Google 下載完成兩個檔案 - GMB 深入分析">
+    <div class="caption">⑤ 以及 GMB Insights 深入分析</div>
+  </div>
+
+  <div class="callout success">
+    ✅ <b>完成 Google 商家 CSV</b> — 你應該有 <b>2 個 CSV</b>：商家資訊 + 深入分析（GMB Insights）
+  </div>
+</section>
+
+<!-- 關鍵字 -->
+<section class="google" id="keywords">
+  <h2><span class="num">4</span> 🔍 Google 關鍵字（複製文字）</h2>
+
+  <p>因為 Google 沒有提供關鍵字資料的 CSV 匯出，需要 <b>手動複製前 20 名</b>。</p>
+
+  <h3>取得方式</h3>
+  <ol class="steps">
+    <li>用 Google 搜尋你的店家名稱，例：<code>燦坤五甲店 x AppleShop 五甲店</code></li>
+    <li>右側商家檔案面板中，點 <b>「成效」</b> 按鈕</li>
+    <li>捲到「使用者如何找到你」→ <b>「搜尋字詞統計」</b></li>
+    <li>點右下角 <b>「顯示更多資訊」</b></li>
+    <li><b>複製前 20 名的內容</b>（序號、關鍵字、次數）</li>
+  </ol>
+
+  <div class="screenshot">
+    <img src="guide-images/google-kw-1.png" alt="Google 搜尋商家 → 成效">
+    <div class="caption">① 搜尋商家 → 點「成效」</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/google-kw-2.png" alt="Google 搜尋字詞統計位置">
+    <div class="caption">② 找到「搜尋字詞統計」→ 顯示更多資訊</div>
+  </div>
+  <div class="screenshot">
+    <img src="guide-images/google-kw-3.png" alt="Google 前 20 名關鍵字">
+    <div class="caption">③ 複製前 20 名內容（會像下方範例）</div>
+  </div>
+
+  <h3>複製後的格式範例</h3>
+  <div class="callout info" style="font-family:monospace;font-size:13px;line-height:1.8;white-space:pre-wrap">1.
+燦坤
+3萬
+2.
+apple
+7,205
+3.
+燦坤門市
+2,039
+...
+20.
+（第 20 名關鍵字）
+XXX</div>
+
+  <div class="callout success">
+    ✅ <b>完成關鍵字</b> — 貼到記事本或直接放在 Email／訊息內傳給 Kristin
+  </div>
+</section>
+
+<!-- 交檔 -->
+<section class="deliver" id="deliver">
+  <h2><span class="num">5</span> 📤 把資料回傳給 Kristin</h2>
+
+  <h3>要傳的東西總共 6 項：</h3>
+  <table>
+    <thead>
+      <tr><th>類別</th><th>檔案／內容</th><th>形式</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>📘 FB</td><td>每日互動 CSV</td><td>檔案</td></tr>
+      <tr><td>📘 FB</td><td>貼文明細 CSV</td><td>檔案</td></tr>
+      <tr><td>📷 IG</td><td>貼文明細 CSV</td><td>檔案</td></tr>
+      <tr><td>🌟 Google</td><td>商家資訊 CSV</td><td>檔案</td></tr>
+      <tr><td>🌟 Google</td><td>深入分析 CSV</td><td>檔案</td></tr>
+      <tr><td>🔍 Google</td><td>前 20 名搜尋關鍵字</td><td>文字</td></tr>
+    </tbody>
+  </table>
+
+  <h3>傳送方式（選一種）</h3>
+  <ol class="steps">
+    <li><b>Email</b>：把 5 個 CSV 檔案附上，關鍵字直接貼在信件內文</li>
+    <li><b>LINE / iMessage</b>：把檔案傳給 Kristin，關鍵字用文字訊息貼上</li>
+    <li><b>共用資料夾</b>（若有）：Google Drive / iCloud 分享連結</li>
+  </ol>
+
+  <div class="callout warn">
+    ⚠️ <b>檔案命名建議</b>：可以在檔名前加上你的店名，方便辨識，例：<br>
+    <code>五甲店_FB_每日.csv</code>、<code>華榮店_IG_貼文.csv</code>
+  </div>
+
+  <div class="callout info">
+    📅 <b>建議每月月初回傳一次</b>（例如每月 5 號前），因為貼文數據會持續更新 24-72 小時，月初匯出上個月的資料最準確。
+  </div>
+</section>
+
+<!-- 完成摘要 -->
+<div class="summary-box">
+  <h3>🎉 完成後你會回傳這 6 項資料</h3>
+  <div class="items">
+    <div><b>2</b>FB CSV</div>
+    <div><b>1</b>IG CSV</div>
+    <div><b>2</b>Google CSV</div>
+    <div><b>1</b>關鍵字文字</div>
+  </div>
+</div>
+
+<!-- 常見問題 -->
+<section>
+  <h2>❓ 常見問題</h2>
+
+  <h3>Q1：找不到匯出按鈕？</h3>
+  <p>Meta 介面常改版，若找不到：每個資料卡片右上角有 <b>⬇️</b> 或 <b>⋯</b>，或整個頁面右上角。找不到就截圖問 Kristin。</p>
+
+  <h3>Q2：一定要用電腦嗎？</h3>
+  <p>是的，手機版沒有匯出功能。</p>
+
+  <h3>Q3：檔案打開亂碼？</h3>
+  <p>用 Excel 或 Numbers 打開，如果亂碼：另存新檔 → 編碼選 UTF-8。</p>
+
+  <h3>Q4：我的店家資料會被其他店看到嗎？</h3>
+  <p>不會 🔒 Kristin 會統一上傳到後台，各店的數據都獨立呈現。</p>
+
+  <h3>Q5：多久要傳一次？</h3>
+  <p>每月一次，建議月初 5 號前傳上個月的資料。</p>
+</section>
+
+<footer>
+  <div>📞 <b>聯絡 Kristin</b></div>
+  <div style="margin-top:8px;opacity:.8">文件版本 v1.0 · 2026/07 · 燦坤 Apple Shop 分析後台資料收集</div>
+</footer>
+
+</body>
+</html>
