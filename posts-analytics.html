@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <title>📊 FB 粉專成效分析 · 燦坤 Apple Shop</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="apple-touch-icon" href="apple-touch-icon.svg">
+<link rel="icon" type="image/svg+xml" href="apple-touch-icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="社群成效">
+<meta name="theme-color" content="#5e5ce6">
+
 <style>
   :root {
     --bg: #f2f2f7;
@@ -148,8 +155,7 @@
     color: var(--muted);
     margin-top: 6px;
   }
-
-  .section {
+.section {
     background: var(--card);
     border-radius: 16px;
     padding: 20px;
@@ -401,9 +407,43 @@
     .kpi-grid { grid-template-columns: repeat(3, 1fr); }
     .grid-2 { grid-template-columns: 1fr; }
   }
+
+  /* 🔔 更新通知橫幅 */
+  #update-banner {
+    display: none;
+    background: linear-gradient(135deg,#34c759,#30d158);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(52,199,89,.3);
+    align-items: center;
+    gap: 12px;
+    animation: bannerIn .4s ease-out;
+  }
+  #update-banner.show { display: flex; }
+  #update-banner .msg { flex: 1; font-size: 14px; font-weight: 600; }
+  #update-banner .msg small { display: block; opacity: .85; font-weight: 400; font-size: 12px; margin-top: 2px; }
+  #update-banner button {
+    background: rgba(255,255,255,.25);
+    color: white;
+    border: 1px solid rgba(255,255,255,.4);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  #update-banner button:hover { background: rgba(255,255,255,.35); }
+  @keyframes bannerIn {
+    from { transform: translateY(-10px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+  }
 </style>
 </head>
 <body>
+
+<div id="update-banner"><span style="font-size:20px">🔔</span><div class="msg"></div><button id="banner-dismiss">知道了</button></div>
 
 <header>
   <div>
@@ -921,6 +961,8 @@ function filterDataByRange(data) {
   if (r && data.formats) filtered.formats = null;
   return filtered;
 }
+
+
 
 // ===== Google 儀表板渲染 =====
 function renderGoogleDashboard(g) {
@@ -1489,19 +1531,6 @@ function render() {
       </div>`;
   }
 
-  // ===== 每日趨勢 =====
-  if (data.daily) {
-    html += `
-      <div class="section">
-        <h3 class="section-title">📈 每日互動趨勢</h3>
-        <svg class="trend-chart" id="trend-svg"></svg>
-        <div class="data-info">
-          <span>💡 滑鼠移到折線上可看詳細數字</span>
-          <span>📥 更新於：${new Date(data.dailyUpdated).toLocaleString('zh-TW')}</span>
-        </div>
-      </div>`;
-  }
-
   // ===== 內容格式比較 =====
   html += `<div class="grid-2">`;
 
@@ -1581,6 +1610,113 @@ function render() {
       '相片': '📷', '影片': '🎬', '連結': '🔗', 'Reel': '🎞️',
       '限時動態': '📱', '直播': '🔴', '其他': '📝'
     };
+
+    // ===== 洞察摘要（自動根據資料產出重點與建議）=====
+    (function generateInsights() {
+      const highlights = [];
+      const alerts = [];
+      const suggestions = [];
+
+      // --- 亮點分析 ---
+      const champ = posts[0];
+      if (champ && champ.rate) {
+        highlights.push(`🏆 冠軍貼文「${(champ.title||'').slice(0,20)}...」互動率 <b>${champ.rate}%</b>`);
+      }
+      // 找高互動率貼文
+      const highRatePosts = posts.filter(p => p.rate >= 10).length;
+      if (highRatePosts >= 3) {
+        highlights.push(`🔥 有 <b>${highRatePosts}</b> 則貼文互動率破 10%，代表內容有共鳴`);
+      }
+      // 分享數突出
+      const highSharePosts = posts.filter(p => p.share >= 3).length;
+      if (highSharePosts) {
+        highlights.push(`↗️ <b>${highSharePosts}</b> 則貼文被分享 3 次以上，傳播力佳`);
+      }
+
+      // --- 貼文類型分析 ---
+      const typeAgg = {};
+      posts.forEach(p => {
+        if (!typeAgg[p.type]) typeAgg[p.type] = { c:0, r:0, reach:0 };
+        typeAgg[p.type].c++;
+        typeAgg[p.type].r += p.rate;
+        typeAgg[p.type].reach += p.reach;
+      });
+      const typeRanks = Object.entries(typeAgg)
+        .map(([t,v]) => ({ type:t, count:v.c, avgRate:(v.r/v.c).toFixed(1) }))
+        .sort((a,b) => b.avgRate - a.avgRate);
+      if (typeRanks.length >= 2) {
+        const top = typeRanks[0];
+        const bot = typeRanks[typeRanks.length-1];
+        if (top.avgRate > 0) {
+          suggestions.push(`🎨 <b>${top.type}</b> 平均互動率 ${top.avgRate}%（最高），建議多產出這類內容`);
+        }
+        if (bot.count >= 2 && bot.avgRate < 5) {
+          alerts.push(`⚠️ <b>${bot.type}</b> 平均互動率僅 ${bot.avgRate}%，可考慮減少或調整寫法`);
+        }
+      }
+
+      // --- 發文時段分析 ---
+      const slotAgg = {};
+      posts.forEach(p => {
+        const m = p.time.match(/(\d{2}):/);
+        if (!m) return;
+        const h = parseInt(m[1]);
+        const slot = h < 6 ? '深夜' : h < 12 ? '上午' : h < 18 ? '下午' : '晚上';
+        if (!slotAgg[slot]) slotAgg[slot] = { c:0, r:0 };
+        slotAgg[slot].c++;
+        slotAgg[slot].r += p.rate;
+      });
+      const slotRanks = Object.entries(slotAgg)
+        .map(([s,v]) => ({ slot:s, count:v.c, avgRate:(v.r/v.c).toFixed(1) }))
+        .sort((a,b) => b.avgRate - a.avgRate);
+      if (slotRanks.length >= 2 && slotRanks[0].count >= 2) {
+        suggestions.push(`🕐 <b>${slotRanks[0].slot}</b>時段互動率最高（${slotRanks[0].avgRate}%），建議把重點貼文排此時段`);
+      }
+
+      // --- 貼文數量健康度 ---
+      if (posts.length < 8) {
+        alerts.push(`📉 期間內只有 ${posts.length} 則貼文，發文頻率偏低`);
+      } else if (posts.length >= 20) {
+        highlights.push(`📝 期間內發了 <b>${posts.length}</b> 則貼文，發文頻率穩定`);
+      }
+
+      // --- 互動率整體評價 ---
+      const avgAll = posts.reduce((s,p) => s+p.rate, 0) / posts.length;
+      if (avgAll >= 12) {
+        highlights.push(`📈 整體平均互動率 <b>${avgAll.toFixed(1)}%</b>，優於業界平均（3-5%）`);
+      } else if (avgAll < 5) {
+        alerts.push(`📊 整體平均互動率 ${avgAll.toFixed(1)}%，仍有提升空間`);
+      }
+
+      // 若沒有內容，給預設訊息
+      if (!highlights.length) highlights.push('資料量還不夠多，持續累積中');
+      if (!suggestions.length) suggestions.push('持續發文並觀察互動變化');
+
+      // 組合 HTML
+      const li = arr => arr.map(x => `<li style="margin:4px 0;line-height:1.6">${x}</li>`).join('');
+      html += `
+        <div class="section" style="background:linear-gradient(135deg,#007aff,#5e5ce6);color:white;border:none">
+          <div style="font-size:13px;opacity:.9;margin-bottom:4px">📌 智慧洞察摘要</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:14px">${currentShop} · 本期表現總結</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+            <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:14px">
+              <div style="font-size:13px;font-weight:700;margin-bottom:8px;opacity:.95">✅ 亮點</div>
+              <ul style="margin:0;padding-left:18px;font-size:13px">${li(highlights)}</ul>
+            </div>
+            ${alerts.length ? `
+            <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:14px">
+              <div style="font-size:13px;font-weight:700;margin-bottom:8px;opacity:.95">⚠️ 需注意</div>
+              <ul style="margin:0;padding-left:18px;font-size:13px">${li(alerts)}</ul>
+            </div>` : ''}
+            <div style="background:rgba(255,255,255,.12);border-radius:12px;padding:14px">
+              <div style="font-size:13px;font-weight:700;margin-bottom:8px;opacity:.95">🎯 下期建議</div>
+              <ul style="margin:0;padding-left:18px;font-size:13px">${li(suggestions)}</ul>
+            </div>
+          </div>
+          <div style="font-size:11px;opacity:.75;margin-top:12px;text-align:right">💡 根據期間內 ${posts.length} 則貼文自動分析</div>
+        </div>
+      `;
+    })();
 
     // 冠軍
     const champion = posts[0];
@@ -2044,6 +2180,28 @@ async function loadCentralData() {
       wrap.style.textAlign = 'center';
       wrap.appendChild(badge);
       document.querySelector('header').after(wrap);
+
+      // 🔔 檢查是否有新版本，若有則顯示通知
+      const LAST_SEEN_KEY = 'fb-analytics-last-seen-update';
+      const lastSeen = localStorage.getItem(LAST_SEEN_KEY);
+      if (lastSeen && lastSeen !== central.exportedAt) {
+        const banner = document.getElementById('update-banner');
+        const msg = banner.querySelector('.msg');
+        const prev = new Date(lastSeen);
+        const now = new Date(central.exportedAt);
+        const daysDiff = Math.round((now - prev) / 86400000);
+        msg.innerHTML = `後台資料已更新！<small>上次瀏覽以來過了 ${daysDiff > 0 ? daysDiff + ' 天' : '幾小時'}，最新更新時間：${time}</small>`;
+        banner.classList.add('show');
+      }
+      // 記錄本次的版本
+      document.getElementById('banner-dismiss')?.addEventListener('click', () => {
+        document.getElementById('update-banner').classList.remove('show');
+        localStorage.setItem(LAST_SEEN_KEY, central.exportedAt);
+      });
+      // 若使用者沒點按鈕，5 秒後自動記錄（避免下次一直提示）
+      if (!lastSeen) {
+        localStorage.setItem(LAST_SEEN_KEY, central.exportedAt);
+      }
     }
   }
   render();
