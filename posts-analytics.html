@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <title>📊 FB 粉專成效分析 · 燦坤 Apple Shop</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="apple-touch-icon" href="apple-touch-icon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="apple-touch-icon.svg">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2184,24 +2184,36 @@ async function loadCentralData() {
       // 🔔 檢查是否有新版本，若有則顯示通知
       const LAST_SEEN_KEY = 'fb-analytics-last-seen-update';
       const lastSeen = localStorage.getItem(LAST_SEEN_KEY);
+      const banner = document.getElementById('update-banner');
+      const msg = banner.querySelector('.msg');
+      const updateDate = new Date(central.exportedAt);
+      const now = new Date();
+      const daysSinceUpdate = Math.floor((now - updateDate) / 86400000);
+      let shouldShow = false;
+      let bannerText = '';
+
       if (lastSeen && lastSeen !== central.exportedAt) {
-        const banner = document.getElementById('update-banner');
-        const msg = banner.querySelector('.msg');
+        // 情境 A：老用戶，之前有記錄過，這次有新版本
         const prev = new Date(lastSeen);
-        const now = new Date(central.exportedAt);
-        const daysDiff = Math.round((now - prev) / 86400000);
-        msg.innerHTML = `後台資料已更新！<small>上次瀏覽以來過了 ${daysDiff > 0 ? daysDiff + ' 天' : '幾小時'}，最新更新時間：${time}</small>`;
+        const daysDiff = Math.floor((updateDate - prev) / 86400000);
+        bannerText = `後台資料已更新！<small>上次瀏覽以來過了 ${daysDiff > 0 ? daysDiff + ' 天' : '不到一天'}，最新更新時間：${time}</small>`;
+        shouldShow = true;
+      } else if (!lastSeen && daysSinceUpdate <= 7) {
+        // 情境 B：新裝置／主畫面 App 首次開啟，若資料是近 7 天內更新的，也提示
+        bannerText = `後台資料為最新版！<small>${daysSinceUpdate === 0 ? '今天' : daysSinceUpdate + ' 天前'}更新於 ${time}</small>`;
+        shouldShow = true;
+      }
+
+      if (shouldShow) {
+        msg.innerHTML = bannerText;
         banner.classList.add('show');
       }
-      // 記錄本次的版本
+
+      // 綁定「知道了」按鈕
       document.getElementById('banner-dismiss')?.addEventListener('click', () => {
-        document.getElementById('update-banner').classList.remove('show');
+        banner.classList.remove('show');
         localStorage.setItem(LAST_SEEN_KEY, central.exportedAt);
       });
-      // 若使用者沒點按鈕，5 秒後自動記錄（避免下次一直提示）
-      if (!lastSeen) {
-        localStorage.setItem(LAST_SEEN_KEY, central.exportedAt);
-      }
     }
   }
   render();
