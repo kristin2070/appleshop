@@ -2177,9 +2177,9 @@ async function loadCentralData() {
       badge.style.cssText = 'text-align:center;font-size:12px;color:var(--muted);margin-bottom:12px;padding:6px 12px;background:var(--card);border-radius:20px;display:inline-block';
       badge.innerHTML = `📊 資料更新於：<b>${time}</b>${READONLY ? ' · 由 Kristin 統一維護' : ''}`;
       const wrap = document.createElement('div');
-      wrap.style.textAlign = 'center';
+      wrap.style.cssText = 'text-align:center;margin:40px auto 20px;padding-top:20px;border-top:1px solid var(--border)';
       wrap.appendChild(badge);
-      document.querySelector('header').after(wrap);
+      document.body.appendChild(wrap);
 
       // 🔔 檢查是否有新版本，若有則顯示通知
       const LAST_SEEN_KEY = 'fb-analytics-last-seen-update';
