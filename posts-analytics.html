@@ -686,6 +686,41 @@ function parseGoogleProfile(rows) {
   };
 }
 
+
+// ===== 解析 Google Takeout 評論 JSON =====
+function parseTakeoutReviews(jsonData) {
+  const starMap = { FIVE:5, FOUR:4, THREE:3, TWO:2, ONE:1 };
+  const reviews = [];
+  const list = jsonData.reviews || [];
+  for (const r of list) {
+    reviews.push({
+      author: r.reviewer?.displayName || '匿名',
+      rating: starMap[r.starRating] || 0,
+      date: (r.createTime || '').slice(0, 10),
+      updateDate: (r.updateTime || '').slice(0, 10),
+      text: r.comment || '',
+      replied: !!r.reviewReply,
+      reply: r.reviewReply?.comment || '',
+      replyDate: (r.reviewReply?.updateTime || '').slice(0, 10),
+    });
+  }
+  return reviews;
+}
+
+// 合併評論（去重）
+function mergeReviews(oldReviews, newReviews) {
+  const map = new Map();
+  (oldReviews || []).forEach(r => {
+    const key = `${r.author}|${r.date}|${r.rating}`;
+    map.set(key, r);
+  });
+  newReviews.forEach(r => {
+    const key = `${r.author}|${r.date}|${r.rating}`;
+    map.set(key, r); // 新的覆蓋舊的（回覆狀態可能更新）
+  });
+  return [...map.values()].sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+}
+
 // ===== 解析 IG 貼文明細 CSV =====
 function parseIGPosts(rows) {
   const header = rows[0];
@@ -830,11 +865,77 @@ function parseFormats(rows) {
   return result;
 }
 
+
+// ===== 遞迴讀取拖曳的資料夾（Safari/Chrome 都支援）=====
+async function extractFilesFromDataTransfer(dataTransfer) {
+  const files = [];
+  const items = dataTransfer.items;
+  if (!items || !items[0]?.webkitGetAsEntry) {
+    // 舊瀏覽器 fallback
+    return [...(dataTransfer.files || [])];
+  }
+  // 收集所有 entries
+  const entries = [];
+  for (let i = 0; i < items.length; i++) {
+    const entry = items[i].webkitGetAsEntry();
+    if (entry) entries.push(entry);
+  }
+  // 遞迴展開
+  async function walk(entry) {
+    if (entry.isFile) {
+      await new Promise((resolve) => {
+        entry.file(f => { files.push(f); resolve(); }, resolve);
+      });
+    } else if (entry.isDirectory) {
+      const reader = entry.createReader();
+      const kids = await new Promise((resolve) => {
+        const all = [];
+        function readAll() {
+          reader.readEntries(chunk => {
+            if (!chunk.length) return resolve(all);
+            all.push(...chunk);
+            readAll();
+          }, () => resolve(all));
+        }
+        readAll();
+      });
+      for (const k of kids) await walk(k);
+    }
+  }
+  for (const e of entries) await walk(e);
+  return files;
+}
+
 // ===== 處理上傳 =====
 async function handleFiles(files) {
   const merge = document.getElementById('merge-mode').checked;
   let success = 0, fail = 0, mergedInfo = [], failNames = [], autoSwitched = null;
-  for (const file of files) {
+
+  // === 先處理 JSON 檔（Takeout 評論）===
+  const jsonFiles = [...files].filter(f => f.name.toLowerCase().endsWith('.json'));
+  if (jsonFiles.length) {
+    let allReviews = [];
+    for (const jf of jsonFiles) {
+      try {
+        const jd = JSON.parse(await jf.text());
+        if (jd.reviews) {
+          allReviews = allReviews.concat(parseTakeoutReviews(jd));
+        }
+      } catch (e) { console.warn('略過非評論 JSON:', jf.name); }
+    }
+    if (allReviews.length) {
+      const g = store[currentShop].google;
+      const oldCount = (g.reviews || []).length;
+      g.reviews = mergeReviews(merge ? g.reviews : null, allReviews);
+      g.reviewsUpdated = new Date().toISOString();
+      mergedInfo.push(`評論：${oldCount} + ${allReviews.length} → ${g.reviews.length} 則`);
+      success += jsonFiles.length;
+      if (!autoSwitched) autoSwitched = 'google';
+    }
+  }
+
+  const csvFiles = [...files].filter(f => !f.name.toLowerCase().endsWith('.json'));
+  for (const file of csvFiles) {
     try {
       const text = await file.text();
       const rows = parseCSV(text);
@@ -1189,6 +1290,188 @@ function renderGoogleDashboard(g) {
 
   html += `</div>`;
 
+
+  // ===== ⭐ 顧客評論分析 =====
+  if (reviews.length) {
+    const avgRating = (reviews.reduce((s,r) => s + r.rating, 0) / reviews.length).toFixed(2);
+    const total = reviews.length;
+    const replied = reviews.filter(r => r.replied).length;
+    const replyRate = (replied / total * 100).toFixed(0);
+
+    // 星等分佈
+    const starDist = { 5:0, 4:0, 3:0, 2:0, 1:0 };
+    reviews.forEach(r => { if (starDist[r.rating] !== undefined) starDist[r.rating]++; });
+    const starColors = { 5:'#34c759', 4:'#a8e063', 3:'#ffcc00', 2:'#ff9500', 1:'#ff3b30' };
+
+    // 每年統計
+    const yearMap = {};
+    reviews.forEach(r => {
+      const y = (r.date || '').slice(0,4);
+      if (y) yearMap[y] = (yearMap[y] || 0) + 1;
+    });
+    const years = Object.keys(yearMap).sort();
+    const maxYearCount = Math.max(...Object.values(yearMap), 1);
+    const thisYear = new Date().getFullYear().toString();
+    const thisYearCount = yearMap[thisYear] || 0;
+
+    // 未回覆的負評
+    const badUnreplied = reviews.filter(r => r.rating <= 2 && !r.replied).length;
+
+    html += `
+      <div class="section">
+        <h3 class="section-title">⭐ 顧客評論分析 <span style="font-size:12px;color:var(--muted);font-weight:400">（${total} 則）</span></h3>
+
+        <!-- KPI -->
+        <div class="kpi-grid" style="margin-bottom:20px">
+          <div class="kpi">
+            <div class="kpi-label">📝 總評論數</div>
+            <div class="kpi-value">${total.toLocaleString()}</div>
+            <div class="kpi-sub">累積至今</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">⭐ 平均星等</div>
+            <div class="kpi-value" style="color:var(--warning)">${avgRating}</div>
+            <div class="kpi-sub">${'⭐'.repeat(Math.round(avgRating))}</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">💬 回覆率</div>
+            <div class="kpi-value" style="color:${replyRate>=80?'var(--success)':replyRate>=50?'var(--warning)':'var(--danger)'}">${replyRate}%</div>
+            <div class="kpi-sub">${replied} / ${total}</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">📅 ${thisYear} 新增</div>
+            <div class="kpi-value" style="color:var(--accent)">${thisYearCount}</div>
+            <div class="kpi-sub">本年度</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">⚠️ 未回覆負評</div>
+            <div class="kpi-value" style="color:${badUnreplied?'var(--danger)':'var(--success)'}">${badUnreplied}</div>
+            <div class="kpi-sub">${badUnreplied ? '建議處理' : '全部處理過'}</div>
+          </div>
+        </div>
+
+        <!-- 星等分佈 + 年度趨勢 -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" class="review-grid">
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:12px">🌟 星等分佈</div>
+            ${[5,4,3,2,1].map(s => {
+              const cnt = starDist[s];
+              const pct = total ? (cnt/total*100).toFixed(1) : 0;
+              return `
+                <div class="bar-row" style="grid-template-columns:110px 1fr 60px;gap:8px">
+                  <div style="white-space:nowrap;font-size:13px">${'⭐'.repeat(s)}</div>
+                  <div class="bar-track"><div class="bar-fill" style="width:${pct}%;background:${starColors[s]}">${cnt}</div></div>
+                  <div class="bar-value" style="color:${starColors[s]}">${pct}%</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:12px">📈 每年評論數</div>
+            <div style="display:flex;align-items:flex-end;gap:4px;height:200px;padding:10px 4px 32px;border-bottom:1px solid var(--border);position:relative;background:linear-gradient(180deg,transparent 0%,transparent 25%,rgba(0,0,0,0.02) 25%,rgba(0,0,0,0.02) 50%,transparent 50%,transparent 75%,rgba(0,0,0,0.02) 75%,rgba(0,0,0,0.02) 100%)">
+              ${years.map(y => {
+                const h = Math.max((yearMap[y] / maxYearCount) * 100, 3);
+                const isThis = y === thisYear;
+                const barColor = isThis ? 'linear-gradient(180deg,#007aff,#5e5ce6)' : 'linear-gradient(180deg,#af52de,#7c3aed)';
+                return `
+                  <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:24px;position:relative;height:100%;justify-content:flex-end" title="${y}: ${yearMap[y]} 則">
+                    <div style="position:absolute;top:-16px;font-size:11px;color:var(--text);font-weight:700">${yearMap[y]}</div>
+                    <div style="width:100%;background:${barColor};border-radius:6px 6px 0 0;height:${h}%;box-shadow:0 2px 6px rgba(0,0,0,0.15);${isThis?'box-shadow:0 4px 12px rgba(0,122,255,0.4)':''}"></div>
+                    <div style="position:absolute;bottom:-22px;font-size:11px;color:${isThis?'var(--accent)':'var(--muted)'};font-weight:${isThis?'700':'500'};white-space:nowrap">'${y.slice(2)}</div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        </div>
+
+        <!-- 評論內容分析 -->
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--border)">
+          <div style="font-size:14px;font-weight:700;margin-bottom:14px">🔍 評論內容分析</div>
+          ${(function analyzeReviews() {
+            // 停用詞
+            const stopWords = new Set(['的','了','是','在','有','和','與','或','也','就','都','把','為','從','到','但','而','之','其','等','各','將','會','可','要','能','讓','給','很','更','最','個','則','來','去','再','又','已','這','那','此','以','及','跟','如','您','我','你','他','她','們','很','非常','真的','真是','就是','還是','可以','沒有','不會','所以','因為','什麼','怎麼','這樣','那樣','一下','一個','喔','啊','嗎','呢','唷','啦','喇','哈','齁','ㄛ','ㄜ','ㄟ','ㄎ','店家','店員','燦坤','apple','蘋果','商品','東西','服務','態度','人員','購買','買','買了','購物','門市','這家','那個']);
+            function extractWords(text) {
+              const clean = cleanReviewText(text);
+              // 中文 2-4 字 or 英文
+              const words = clean.match(/[\u4e00-\u9fa5]{2,4}|[a-zA-Z]{3,}/g) || [];
+              return words.map(w => w.toLowerCase()).filter(w => !stopWords.has(w) && w.length >= 2);
+            }
+            const goodReviews = reviews.filter(r => r.rating >= 4 && r.text);
+            const badReviews = reviews.filter(r => r.rating <= 2 && r.text);
+
+            const countWords = (arr) => {
+              const map = {};
+              arr.forEach(r => {
+                const uniq = new Set(extractWords(r.text));
+                uniq.forEach(w => map[w] = (map[w]||0) + 1);
+              });
+              return Object.entries(map)
+                .filter(([w,c]) => c >= 3)
+                .sort((a,b) => b[1] - a[1])
+                .slice(0, 12);
+            };
+
+            const goodWords = countWords(goodReviews);
+            const badWords = countWords(badReviews);
+
+            const renderTag = (w, cnt, color) => `
+              <span style="display:inline-flex;align-items:center;gap:4px;padding:5px 10px;background:${color}20;border:1px solid ${color}40;color:${color};border-radius:14px;font-size:12px;margin:2px">
+                <b>${w}</b><span style="opacity:.7;font-size:11px">${cnt}</span>
+              </span>
+            `;
+
+            let html = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" class="review-anal-grid">';
+            // 好評關鍵字
+            html += `<div>
+              <div style="font-size:13px;font-weight:700;color:var(--success);margin-bottom:10px">✅ 好評高頻詞 (4-5⭐, ${goodReviews.length} 則)</div>
+              <div style="line-height:2">
+                ${goodWords.length ? goodWords.map(([w,c]) => renderTag(w, c, '#34c759')).join('') : '<span style="color:var(--muted);font-size:12px">資料不足</span>'}
+              </div>
+            </div>`;
+            // 負評關鍵字
+            html += `<div>
+              <div style="font-size:13px;font-weight:700;color:var(--danger);margin-bottom:10px">⚠️ 負評高頻詞 (1-2⭐, ${badReviews.length} 則)</div>
+              <div style="line-height:2">
+                ${badWords.length ? badWords.map(([w,c]) => renderTag(w, c, '#ff3b30')).join('') : '<span style="color:var(--muted);font-size:12px">資料不足或無負評</span>'}
+              </div>
+            </div>`;
+            html += '</div>';
+
+            html += '<div style="font-size:11px;color:var(--muted);margin-top:12px">💡 詞頻分析：出現在 ≥ 3 則評論才會列入</div>';
+            html += generateReviewSummary(reviews);
+            return html;
+          })()}
+        </div>
+        <style>
+          @media (max-width: 640px) { .review-anal-grid { grid-template-columns: 1fr !important; } }
+        </style>
+      </div>
+
+      <!-- 最新評論列表 -->
+      <div class="section">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+          <h3 class="section-title" style="margin:0">💬 最新評論 <span style="font-size:12px;color:var(--muted);font-weight:400">（最多顯示 20 則）</span></h3>
+          <div style="display:flex;gap:6px">
+            <button class="filter-btn review-filter active" data-rf="all">全部</button>
+            <button class="filter-btn review-filter" data-rf="good">4-5 星</button>
+            <button class="filter-btn review-filter" data-rf="bad">1-2 星</button>
+            <button class="filter-btn review-filter" data-rf="unreplied">未回覆</button>
+          </div>
+        </div>
+        <div id="reviews-list">
+          ${renderReviewsList(reviews, 'all')}
+        </div>
+      </div>
+
+      <style>
+        @media (max-width: 640px) {
+          .review-grid { grid-template-columns: 1fr !important; }
+        }
+      </style>
+    `;
+  }
+
   // 更新時間
   if (g.perfUpdated) {
     html += `<div style="text-align:center;font-size:11px;color:var(--muted);margin-top:16px">📥 效能資料更新於：${new Date(g.perfUpdated).toLocaleString('zh-TW')}</div>`;
@@ -1324,6 +1607,156 @@ function openReviewLineModal() {
   toast('✅ 已新增評論');
 }
 
+
+
+
+// ===== 智慧評論總結（放在全域）=====
+function generateReviewSummary(reviews) {
+  if (!reviews || !reviews.length) return '';
+  const total = reviews.length;
+  const totalStars = reviews.reduce((s,r) => s + r.rating, 0);
+  const avgRating = (totalStars / total).toFixed(2);
+  const goodCount = reviews.filter(r => r.rating >= 4).length;
+  const badCount  = reviews.filter(r => r.rating <= 2).length;
+  const midCount  = reviews.filter(r => r.rating === 3).length;
+  const goodPct = (goodCount/total*100).toFixed(0);
+  const replied = reviews.filter(r => r.replied).length;
+  const replyRate = (replied/total*100).toFixed(0);
+  const badUnreplied = reviews.filter(r => r.rating <= 2 && !r.replied).length;
+
+  const recent30 = reviews.slice(0, 30);
+  const prev30 = reviews.slice(30, 60);
+  const recentAvg = recent30.length ? recent30.reduce((s,r)=>s+r.rating,0)/recent30.length : 0;
+  const prevAvg   = prev30.length   ? prev30.reduce((s,r)=>s+r.rating,0)/prev30.length     : 0;
+  const trend = recentAvg - prevAvg;
+
+  const summary = [];
+  if (+goodPct >= 75)      summary.push('🌟 <b>口碑優秀</b>：好評率 ' + goodPct + '% 遠超業界平均');
+  else if (+goodPct >= 60) summary.push('👍 <b>口碑穩定</b>：好評率 ' + goodPct + '%，仍有進步空間');
+  else                     summary.push('⚠️ <b>口碑需改善</b>：好評率僅 ' + goodPct + '%');
+
+  if (trend >= 0.3)       summary.push('📈 近期評分 <b>上升</b> ' + trend.toFixed(2) + ' 分（近 30 則 ' + recentAvg.toFixed(2) + '⭐ vs 前 30 則 ' + prevAvg.toFixed(2) + '⭐）');
+  else if (trend <= -0.3) summary.push('📉 近期評分 <b>下降</b> ' + Math.abs(trend).toFixed(2) + ' 分，需關注');
+  else if (recent30.length) summary.push('➡️ 近期評分穩定（' + recentAvg.toFixed(2) + '⭐）');
+
+  const actions = [];
+  const sub = (t) => '<br><span style="opacity:.85;font-size:12px">' + t + '</span>';
+
+  if (badUnreplied > 0)   actions.push('🚨 <b>優先處理 ' + badUnreplied + ' 則未回覆負評</b>' + sub('切換到「1-2 星」+「未回覆」快速找到'));
+  if (replyRate < 30)     actions.push('💬 <b>提高回覆率</b>（目前 ' + replyRate + '%）' + sub('Google 會優先展示有回覆的商家，能提升 SEO'));
+  else if (replyRate < 60) actions.push('💬 回覆率 ' + replyRate + '%，建議提升到 80% 以上');
+  if (badCount > 0)       actions.push('🎯 <b>從負評找改善點</b>（共 ' + badCount + ' 則）' + sub('參考上方負評高頻詞找出反覆問題（例：等待、態度、退換貨）'));
+  if (midCount/total >= 0.15) actions.push('🎯 <b>把 3 星轉為 4-5 星</b>（共 ' + midCount + ' 則）' + sub('3 星客戶通常是「還可以」，多一點體貼服務就能推向好評'));
+
+  actions.push('💡 <b>主動邀請好評</b>' + sub('結帳後給滿意客戶一張 QR Code 引導至 Google 商家評論頁'));
+  actions.push('📸 <b>培養員工正名文化</b>' + sub('穿戴姓名徽章、服務中介紹自己，客戶留評時較容易寫出具體姓名（例：「陳專員很親切」）'));
+
+  if (+avgRating < 4.5) {
+    const need = Math.ceil((4.5*total - totalStars) / (5-4.5));
+    actions.push('⭐ <b>目標平均 4.5⭐</b>（目前 ' + avgRating + '⭐）' + sub('至少需要新增 ' + need + ' 則 5 星評論'));
+  }
+
+  return '<div style="margin-top:24px;padding:20px;background:linear-gradient(135deg,rgba(94,92,230,0.06),rgba(175,82,222,0.06));color:var(--text);border:1px solid rgba(94,92,230,0.15);border-radius:14px;backdrop-filter:blur(8px)">'
+    + '<div style="font-size:13px;opacity:.9;margin-bottom:4px">🧠 智慧評論總結</div>'
+    + '<div style="font-size:16px;font-weight:700;margin-bottom:14px">口碑分析與提升建議</div>'
+    + '<div class="review-summary-grid" style="display:grid;grid-template-columns:1fr 1.4fr;gap:14px">'
+    +   '<div style="background:linear-gradient(135deg,#90caf9,#64b5f6);border-radius:10px;padding:16px;border:1px solid rgba(0,122,255,0.35)">'
+    +     '<div style="font-size:14px;font-weight:700;margin-bottom:10px;color:#0d47a1">📊 目前狀況</div>'
+    +     '<ul style="margin:0;padding:0;font-size:13px;line-height:1.7">'
+    +       summary.map(s => '<li style="list-style:none;margin-bottom:8px;padding:10px 12px;background:#fff8dc;border:1.5px solid #1c1c1e;border-radius:6px;color:#1c1c1e">' + s + '</li>').join('')
+    +     '</ul>'
+    +   '</div>'
+    +   '<div style="background:linear-gradient(135deg,#90caf9,#64b5f6);border-radius:10px;padding:16px;border:1px solid rgba(0,122,255,0.35)">'
+    +     '<div style="font-size:14px;font-weight:700;margin-bottom:10px;color:#0d47a1">🎯 提升星等建議</div>'
+    +     '<ol style="margin:0;padding:0;font-size:13px;line-height:1.7">'
+    +       actions.map(a => '<li style="list-style:none;margin-bottom:10px;padding:10px 12px;background:#fff8dc;border:1.5px solid #1c1c1e;border-radius:6px;color:#1c1c1e">' + a + '</li>').join('')
+    +     '</ol>'
+    +   '</div>'
+    + '</div>'
+    + '<div style="font-size:11px;color:var(--muted);margin-top:10px;text-align:right">🤖 依據 ' + total + ' 則評論自動分析</div>'
+    + '<style>@media (max-width:640px){.review-summary-grid{grid-template-columns:1fr !important}}</style>'
+    + '</div>';
+}
+
+// ===== 移除 Google 翻譯段落 =====
+function cleanReviewText(text) {
+  if (!text) return '';
+  // Google 翻譯格式：「(Translated by Google) xxx (Original) yyy」→ 只留 Original
+  const m = text.match(/\(Original\)([\s\S]+?)(?:\(Translated by Google\)|$)/);
+  if (m) return m[1].trim();
+  const m2 = text.match(/\(Translated by Google\)[\s\S]+?\(Original\)([\s\S]+)/);
+  if (m2) return m2[1].trim();
+  // 直接移除 Translated by Google 段落
+  return text
+    .replace(/\(Translated by Google\)[\s\S]*?(?=\(Original\)|$)/g, '')
+    .replace(/\(Original\)/g, '')
+    .trim();
+}
+
+// ===== 渲染評論列表（可篩選 + 分頁，最多 50 則）=====
+const REVIEW_PAGE_SIZE = 10;
+const REVIEW_MAX = 50;
+function renderReviewsList(reviews, filter, page) {
+  page = page || 1;
+  let list = [...reviews];
+  if (filter === 'bad') list = list.filter(r => r.rating <= 2);
+  else if (filter === 'good') list = list.filter(r => r.rating >= 4);
+  else if (filter === 'unreplied') list = list.filter(r => !r.replied);
+  list = list.slice(0, REVIEW_MAX);
+
+  if (!list.length) return '<div class="placeholder"><div class="big">🎉</div><div>此條件下沒有評論</div></div>';
+
+  const totalPages = Math.ceil(list.length / REVIEW_PAGE_SIZE);
+  if (page > totalPages) page = totalPages;
+  if (page < 1) page = 1;
+  const start = (page - 1) * REVIEW_PAGE_SIZE;
+  const pageList = list.slice(start, start + REVIEW_PAGE_SIZE);
+
+  const starColors = { 5:'#34c759', 4:'#a8e063', 3:'#ffcc00', 2:'#ff9500', 1:'#ff3b30' };
+  const cards = pageList.map(r => {
+    const badRating = r.rating <= 2;
+    const cleanText = cleanReviewText(r.text);
+    const cleanReply = cleanReviewText(r.reply);
+    return `
+      <div style="border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px;${badRating?'border-left:4px solid var(--danger)':''}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:6px">
+          <div>
+            <div style="font-size:15px;color:${starColors[r.rating]};margin-bottom:2px">${'⭐'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+            <div style="font-size:13px"><b>${r.author}</b> <span style="color:var(--muted)">· ${r.date || ''}</span></div>
+          </div>
+          <div>
+            ${r.replied ?
+              '<span style="padding:2px 8px;background:rgba(52,199,89,.15);color:var(--success);border-radius:6px;font-size:11px">✅ 已回覆</span>' :
+              '<span style="padding:2px 8px;background:rgba(255,59,48,.15);color:var(--danger);border-radius:6px;font-size:11px">⚠️ 未回覆</span>'
+            }
+          </div>
+        </div>
+        ${cleanText ? `<div style="font-size:13px;line-height:1.6;white-space:pre-wrap;margin-top:6px">${cleanText}</div>` : '<div style="font-size:12px;color:var(--muted);font-style:italic">（僅評分，無文字）</div>'}
+        ${cleanReply ? `<div style="margin-top:10px;padding:10px;background:var(--bg);border-radius:8px;font-size:12px"><b style="color:var(--success)">🏪 店家回覆：</b>${cleanReply}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+
+  // 分頁列
+  let pagerHtml = '';
+  if (totalPages > 1) {
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+    pagerHtml = `
+      <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:16px;flex-wrap:wrap">
+        <button class="review-page-btn" data-page="${page-1}" ${page===1?'disabled':''} style="padding:6px 12px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:8px;cursor:pointer;font-size:13px;${page===1?'opacity:0.4':''}">‹ 上一頁</button>
+        ${pages.map(p => `
+          <button class="review-page-btn" data-page="${p}" style="padding:6px 12px;border:1px solid ${p===page?'var(--accent)':'var(--border)'};background:${p===page?'var(--accent)':'var(--card)'};color:${p===page?'white':'var(--text)'};border-radius:8px;cursor:pointer;font-size:13px;min-width:36px;font-weight:${p===page?'700':'500'}">${p}</button>
+        `).join('')}
+        <button class="review-page-btn" data-page="${page+1}" ${page===totalPages?'disabled':''} style="padding:6px 12px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:8px;cursor:pointer;font-size:13px;${page===totalPages?'opacity:0.4':''}">下一頁 ›</button>
+        <span style="font-size:12px;color:var(--muted);margin-left:8px">第 ${page} / ${totalPages} 頁 · 共 ${list.length} 則</span>
+      </div>
+    `;
+  }
+
+  return cards + pagerHtml;
+}
+
 // ===== 渲染儀表板 =====
 function render() {
   renderShopSelect();
@@ -1395,6 +1828,38 @@ function render() {
     document.getElementById('edit-reviews-btn')?.addEventListener('click', openReviewModal);
     document.getElementById('add-review-line-btn')?.addEventListener('click', openReviewLineModal);
     document.getElementById('edit-keywords-btn')?.addEventListener('click', openKeywordsModal);
+    // 綁定評論篩選 + 分頁（用事件委派避免重複綁定）
+    (function() {
+      let currentFilter = 'all';
+      let currentPage = 1;
+      const listEl = document.getElementById('reviews-list');
+      if (!listEl) return;
+
+      function rerender() {
+        listEl.innerHTML = renderReviewsList(rawData.reviews || [], currentFilter, currentPage);
+      }
+
+      document.querySelectorAll('.review-filter').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.review-filter').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.dataset.rf;
+          currentPage = 1;
+          rerender();
+        });
+      });
+
+      // 分頁按鈕（事件委派）
+      listEl.addEventListener('click', e => {
+        const btn = e.target.closest('.review-page-btn');
+        if (!btn || btn.disabled) return;
+        const p = parseInt(btn.dataset.page);
+        if (isNaN(p)) return;
+        currentPage = p;
+        rerender();
+        listEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
     document.querySelectorAll('.del-review').forEach(el => {
       el.addEventListener('click', e => {
         const idx = +el.dataset.idx;
@@ -1814,6 +2279,76 @@ function render() {
       </div>
     </div>`;
 
+
+    // ===== 🧬 內容 DNA 分析 =====
+    (function contentDNA() {
+      // 從貼文標題抽詞（停用詞過濾）
+      const stopWords = new Set(['的','了','是','在','有','和','與','或','也','就','都','把','為','從','到','但','而','之','其','等','各','將','會','可','要','能','讓','給','很','更','最','個','則','來','去','再','又','已','已經','這','那','此','以','及','跟','如','若','若你','您','我們','你們','他們','您好','喔','啊','嗎','呢','唷','啦','喇','哈','齁','ㄛ','ㄜ','ㄟ','ㄎ','the','a','an','of','and','or','to','in','for','with','on','at','is','are','was','were']);
+      const wordStats = {}; // word -> { count, rateSum, posts:[] }
+      posts.forEach(p => {
+        const title = (p.title || '').replace(/[\r\n]+/g,' ');
+        // 抓中英文詞（2-6字）
+        const words = title.match(/[\u4e00-\u9fa5]{2,6}|[a-zA-Z][a-zA-Z0-9]{2,}/g) || [];
+        const uniq = new Set(words.map(w => w.toLowerCase()));
+        uniq.forEach(w => {
+          if (stopWords.has(w) || w.length < 2) return;
+          if (!wordStats[w]) wordStats[w] = { count: 0, rateSum: 0 };
+          wordStats[w].count++;
+          wordStats[w].rateSum += p.rate;
+        });
+      });
+      // 篩選：出現 >= 2 次
+      const words = Object.entries(wordStats)
+        .filter(([w,s]) => s.count >= 2)
+        .map(([w,s]) => ({ word:w, count:s.count, avgRate:(s.rateSum/s.count).toFixed(1) }))
+        .sort((a,b) => b.avgRate - a.avgRate);
+      if (!words.length) return;
+
+      const avgAllRate = posts.reduce((s,p)=>s+p.rate,0) / posts.length;
+      const top = words.slice(0, 12);
+      const bottom = words.slice(-6).reverse().filter(w => w.avgRate < avgAllRate);
+
+      html += `
+        <div class="section">
+          <h3 class="section-title">🧬 內容 DNA 分析 <span style="font-size:12px;color:var(--muted);font-weight:400">（貼文標題關鍵字表現）</span></h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px" class="dna-grid">
+            <div>
+              <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--success)">🔥 高互動關鍵字 TOP</div>
+              ${top.map(w => {
+                const isHot = w.avgRate > avgAllRate * 1.3;
+                const cls = isHot ? 'success' : (w.avgRate > avgAllRate ? 'accent' : 'muted');
+                return `
+                  <div style="display:grid;grid-template-columns:1fr 60px 70px;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;align-items:center">
+                    <div><b>${w.word}</b>${isHot?' ⭐':''}</div>
+                    <div style="text-align:right;color:var(--muted);font-size:12px">${w.count} 篇</div>
+                    <div style="text-align:right;color:var(--${cls});font-weight:700">${w.avgRate}%</div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+            <div>
+              <div style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--danger)">📉 低互動關鍵字（可調整寫法）</div>
+              ${bottom.length ? bottom.map(w => `
+                  <div style="display:grid;grid-template-columns:1fr 60px 70px;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;align-items:center">
+                    <div><b>${w.word}</b></div>
+                    <div style="text-align:right;color:var(--muted);font-size:12px">${w.count} 篇</div>
+                    <div style="text-align:right;color:var(--danger);font-weight:700">${w.avgRate}%</div>
+                  </div>
+                `).join('') : '<div style="color:var(--muted);font-size:13px;padding:20px 0;text-align:center">所有關鍵字都表現不錯 👍</div>'}
+              <div style="font-size:11px;color:var(--muted);margin-top:14px;line-height:1.6">
+                💡 <b>基準線</b>：本期平均互動率 ${avgAllRate.toFixed(1)}%<br>
+                🔍 建議：多用高互動關鍵字寫貼文，低互動的可換角度或減少
+              </div>
+            </div>
+          </div>
+        </div>
+        <style>
+          @media (max-width: 640px) { .dna-grid { grid-template-columns: 1fr !important; } }
+          .text-accent { color: var(--accent); }
+        </style>
+      `;
+    })();
+
     // TOP 10 排行
     const top10 = posts.slice(0, 10);
     html += `
@@ -2065,11 +2600,11 @@ fi.addEventListener('change', e => handleFiles(e.target.files));
     uz.classList.remove('dragover');
   });
 });
-window.addEventListener('drop', e => {
+window.addEventListener('drop', async e => {
   e.preventDefault();
   uz.classList.remove('dragover');
-  const files = e.dataTransfer?.files;
-  if (files && files.length) handleFiles(files);
+  const files = await extractFilesFromDataTransfer(e.dataTransfer);
+  if (files.length) handleFiles(files);
 });
 
 window.addEventListener('resize', () => {

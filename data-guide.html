@@ -320,7 +320,7 @@
 <!-- 總覽 -->
 <section id="overview">
   <h2>🎯 這次要收集的資料清單</h2>
-  <p>每月定期把以下 <b>3 項資料</b> 從各平台匯出／複製，回傳給 Kristin 統一上傳到分析後台：</p>
+  <p>每月定期把以下 <b>4 項資料</b> 從各平台匯出／複製，回傳給 Kristin 統一上傳到分析後台：</p>
 
   <div class="file-list">
     <div class="file-item">
@@ -350,6 +350,13 @@
       <div class="info">
         <div class="name">Google 商家 — 深入分析 CSV</div>
         <div class="desc">效能報表（GMB Insights）</div>
+      </div>
+    </div>
+    <div class="file-item">
+      <div class="icon">⭐</div>
+      <div class="info">
+        <div class="name">Google 商家 — 顧客評論 JSON</div>
+        <div class="desc">從 Google Takeout 匯出「地圖 - 商家評論」（每年一次即可）</div>
       </div>
     </div>
     <div class="file-item">
@@ -542,11 +549,52 @@ XXX</div>
   </div>
 </section>
 
+
+<!-- 顧客評論 -->
+<section class="google" id="reviews">
+  <h2><span class="num">4</span> ⭐ Google 顧客評論（1 個資料夾）</h2>
+
+  <p>Google 商家後台<b>無法匯出評論明細</b>，需要透過 <b>Google Takeout</b>（Google 資料備份工具）匯出。</p>
+
+  <div class="callout info">
+    💡 <b>好消息</b>：一次匯出就能取得歷年所有評論（可能幾百到上千則），之後每年匯出一次即可。
+  </div>
+
+  <h3>📥 匯出步驟</h3>
+  <ol class="steps">
+    <li>用 <b>店家 Google 帳號</b> 登入 <a href="https://takeout.google.com" target="_blank">takeout.google.com</a></li>
+    <li>點 <b>「取消全選」</b>（預設會選全部服務，我們只需要地圖）</li>
+    <li>往下捲，找到 <b>「地圖 - 商家設定檔」</b>（Maps）→ 勾選</li>
+    <li>捲到最下面，點 <b>「下一步」</b></li>
+    <li>設定：
+      <ul>
+        <li>傳送方式：<b>透過電子郵件傳送下載連結</b></li>
+        <li>頻率：<b>匯出一次</b></li>
+        <li>檔案類型：<b>.zip</b></li>
+        <li>檔案大小：<b>2GB</b></li>
+      </ul>
+    </li>
+    <li>點 <b>「建立匯出」</b> → 等 Google 寄信通知（幾分鐘到幾小時）</li>
+    <li>信件中點下載連結 → 下載 <code>takeout-XXX.zip</code></li>
+    <li><b>解壓縮</b> → 找到 <code>Takeout/地圖 (你的商家設定檔)/</code> 資料夾</li>
+    <li>裡面會有很多 <code>reviews-*.json</code> 檔案 → 就是評論資料</li>
+    <li>把整個 <code>Takeout</code> 資料夾傳給 Kristin</li>
+  </ol>
+
+  <div class="callout warn">
+    ⚠️ <b>檔案數量多</b>：可能有 60~100 個 JSON 檔（每檔 19 則評論），請整個資料夾壓縮成 zip 或用 iCloud/Drive 分享。
+  </div>
+
+  <div class="callout success">
+    ✅ <b>完成</b> — 傳整個 Takeout 資料夾（或 zip）給 Kristin，之後每年匯出一次即可保持最新。
+  </div>
+</section>
+
 <!-- 交檔 -->
 <section class="deliver" id="deliver">
-  <h2><span class="num">4</span> 📤 把資料回傳給 Kristin</h2>
+  <h2><span class="num">5</span> 📤 把資料回傳給 Kristin</h2>
 
-  <h3>要傳的東西總共 5 項：</h3>
+  <h3>要傳的東西總共 6 項：</h3>
   <table>
     <thead>
       <tr><th>類別</th><th>檔案／內容</th><th>形式</th></tr>
@@ -556,6 +604,7 @@ XXX</div>
       <tr><td>📘 FB</td><td>貼文明細 CSV</td><td>檔案</td></tr>
       <tr><td>🌟 Google</td><td>商家資訊 CSV</td><td>檔案</td></tr>
       <tr><td>🌟 Google</td><td>深入分析 CSV</td><td>檔案</td></tr>
+      <tr><td>⭐ Google</td><td>顧客評論 JSON 資料夾</td><td>檔案</td></tr>
       <tr><td>🔍 Google</td><td>前 20 名搜尋關鍵字</td><td>文字</td></tr>
     </tbody>
   </table>
@@ -577,10 +626,11 @@ XXX</div>
 
 <!-- 完成摘要 -->
 <div class="summary-box">
-  <h3>🎉 完成後你會回傳這 5 項資料</h3>
+  <h3>🎉 完成後你會回傳這 6 項資料</h3>
   <div class="items">
     <div><b>2</b>FB CSV</div>
     <div><b>2</b>Google CSV</div>
+    <div><b>1</b>評論資料夾</div>
     <div><b>1</b>關鍵字文字</div>
   </div>
 </div>
