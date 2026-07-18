@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "exportedAt": "2026-07-17T06:53:49.198Z",
+  "exportedAt": "2026-07-18T07:57:15.268Z",
   "store": {
     "五甲店": {
       "fb": {
@@ -9560,9 +9560,1709 @@
       "google": {}
     },
     "右昌店": {
-      "fb": {},
+      "fb": {
+        "daily": [
+          {
+            "date": "12/31/2025",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/01/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/02/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/03/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "01/04/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/05/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/06/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/07/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/08/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/09/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/10/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/11/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/12/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/13/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "01/14/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/15/2026",
+            "interact": 7,
+            "negative": 0
+          },
+          {
+            "date": "01/16/2026",
+            "interact": 23,
+            "negative": 0
+          },
+          {
+            "date": "01/17/2026",
+            "interact": 4,
+            "negative": 0
+          },
+          {
+            "date": "01/18/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/19/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "01/20/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/21/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/22/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/23/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "01/24/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/25/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "01/26/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "01/27/2026",
+            "interact": 3,
+            "negative": 1
+          },
+          {
+            "date": "01/28/2026",
+            "interact": 5,
+            "negative": 0
+          },
+          {
+            "date": "01/29/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "01/30/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "01/31/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/01/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/02/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/03/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "02/04/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/05/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/06/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/07/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/08/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/09/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/10/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/11/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/12/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/13/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/14/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/15/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "02/16/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/17/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/18/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "02/19/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/20/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "02/21/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/22/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/23/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/24/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/25/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/26/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/27/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "02/28/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/01/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/02/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/03/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/04/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "03/05/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/06/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/07/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/08/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/09/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/10/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/11/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/12/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/13/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/14/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/15/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/16/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/17/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/18/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/19/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/20/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/21/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/22/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/23/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/24/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/25/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/26/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/27/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/28/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/29/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/30/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "03/31/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/01/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/02/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/03/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/04/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/05/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/06/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/07/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/08/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/09/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "04/10/2026",
+            "interact": 10,
+            "negative": 0
+          },
+          {
+            "date": "04/11/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "04/12/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/13/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/14/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/15/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/16/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/17/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/18/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/19/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/20/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/21/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/22/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/23/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/24/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/25/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/26/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/27/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/28/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/29/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "04/30/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/01/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "05/02/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/03/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/04/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/05/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/06/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/07/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/08/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/09/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/10/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/11/2026",
+            "interact": 7,
+            "negative": 0
+          },
+          {
+            "date": "05/12/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/13/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/14/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/15/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/16/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "05/17/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/18/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/19/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/20/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/21/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "05/22/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/23/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/24/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/25/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/26/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "05/27/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "05/28/2026",
+            "interact": 4,
+            "negative": 0
+          },
+          {
+            "date": "05/29/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "05/30/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "05/31/2026",
+            "interact": 6,
+            "negative": 0
+          },
+          {
+            "date": "06/01/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/02/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "06/03/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/04/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/05/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/06/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/07/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/08/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/09/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/10/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/11/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/12/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/13/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "06/14/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/15/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/16/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/17/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/18/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/19/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/20/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/21/2026",
+            "interact": 6,
+            "negative": 0
+          },
+          {
+            "date": "06/22/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/23/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/24/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/25/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/26/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/27/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "06/28/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "06/29/2026",
+            "interact": 2,
+            "negative": 0
+          },
+          {
+            "date": "06/30/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/01/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/02/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/03/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/04/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "07/05/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "07/06/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/07/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/08/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/09/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "07/10/2026",
+            "interact": 3,
+            "negative": 0
+          },
+          {
+            "date": "07/11/2026",
+            "interact": 1,
+            "negative": 0
+          },
+          {
+            "date": "07/12/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/13/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/14/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/15/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/16/2026",
+            "interact": 0,
+            "negative": 0
+          },
+          {
+            "date": "07/17/2026",
+            "interact": 3,
+            "negative": 0
+          }
+        ],
+        "dailyUpdated": "2026-07-18T07:52:18.634Z",
+        "posts": [
+          {
+            "id": "1326859829458364",
+            "title": "(無標題)",
+            "time": "01/25/2026 22:35",
+            "type": "影片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid021XqPoKtKWpmC5iCQCvGo35JyQkqK2y8miSg3RUHpfGu7DmcxWmJgaePrxH4LCnAMl",
+            "views": 0,
+            "reach": 30,
+            "total": 2,
+            "react": 2,
+            "comment": 0,
+            "share": 0,
+            "click": 3,
+            "rate": 6.7
+          },
+          {
+            "id": "1346745700803110",
+            "title": "迎新送舊過新年，快帶岳母來買手機\n幫家人留下美好時光\n買蘋果就來燦坤最優惠\n還可並行教育方案喔！\n\n🏠：高雄市楠梓區德民路836號\n☎️￼：（07）364-3207\n#燦坤#蘋果#新年#教育方案#舊換新折抵再加碼",
+            "time": "02/18/2026 00:33",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0Rbyh3TKKDtSUFZZdwnhqyuHbznE5RNd8QzjcqCfDH74skLVpfYAt2JhCDtipAaXbl",
+            "views": 95,
+            "reach": 55,
+            "total": 1,
+            "react": 1,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 1.8
+          },
+          {
+            "id": "1316363187174695",
+            "title": "🍎【Apple 健康生活家｜小教室課程公告】🍎\n你知道 iPhone 和 Apple Watch 裡，其實藏了很多實用的健康功能嗎？\n不只是記錄步數，還能幫助你更了解自己的日常生活與健康狀況 👀⌚\n\n📣 Apple 健康生活家 小教室開課中！\n透過輕鬆好懂的方式，帶大家認識 iPhone、Apple Watch 的健康相關功能，\n從日常活動記錄到實際應用技巧，\n讓科技真正成為生活中的貼心幫手 ❤️\n\n🗓 課程時間｜1/23（四）19:00–20:00\n📍 上課地點｜高雄市楠梓區德民路 836 號 2 樓\n👥 課程人數｜限額 10 人\n📱 需自備設備｜iPhone、Apple Watch\n\n✨ 課程公告小提醒\n自 2 月份起，每月小教室將由 一堂課升級為兩堂課，\n課程內容更加豐富，歡迎大家持續關注與參與 🙌\n\n📝 報名方式\n請私訊提供 姓名＋聯絡電話，\n我們將回覆「報名成功」訊息，即完成報名 ✔️\n\n名額有限，想更了解 Apple 健康功能的朋友，\n現在就來 踴躍報名 吧！！",
+            "time": "01/13/2026 03:33",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02mKxETBGNTp4WyGVduBARwAqAjQqHXvEVEWCBYdYyAgp8xWCagrr6jM8MPbHUzmUml",
+            "views": 84,
+            "reach": 47,
+            "total": 1,
+            "react": 1,
+            "comment": 0,
+            "share": 0,
+            "click": 1,
+            "rate": 2.1
+          },
+          {
+            "id": "1308771524600528",
+            "title": "(無標題)",
+            "time": "01/02/2026 19:30",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02L6eUFda9Ey11LJgK8eSbvic77fyF9BqssWwrNdsZ8JnHctr98cg9a3pb5ouSWtD6l",
+            "views": 76,
+            "reach": 39,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 4,
+            "rate": 0
+          },
+          {
+            "id": "1306801111464236",
+            "title": "(無標題)",
+            "time": "12/31/2025 05:35",
+            "type": "影片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02aQrxLK4rhmih7ZDe4qNnfMbedtwEnvXdMhGWPMHGMapRUSavRZghKhLs4QYfqmFTl",
+            "views": 0,
+            "reach": 28,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1473733181437694",
+            "title": "📚 2026 Apple BTS 教育專案開跑！ 🎓\n\n準備開學，現在就是入手 Mac、iPad 的最佳時機！\n\n即日起至 8/27，凡符合資格的 大專院校學生、教職員，即可享有 Apple 教育優惠價，來燦坤購買再享更多門市專屬好康！\n\n✨ 門市限定優勢\n✅ 與 Apple 官網相同教育價\n✅ 最高可享 NT$6,969 開學好禮 或自選配件優惠\n✅ 基本 3 期 0 利率，搭配保固最高可享 12 期 0 利率\n✅ 舊機現場專人快速估價，直接折抵新機\n✅ 保護貼、保護殼現場協助安裝，帶回家立即使用\n\n💻 熱門機型適用\n• MacBook Air\n• MacBook Pro\n• iPad Air\n• iPad Pro\n\n📍 燦坤右昌 Apple Shop\n🏠 高雄市楠梓區德民路836號2樓\n📞 07-364-3207\n\n不知道自己是否符合教育價資格嗎？\n歡迎私訊我們協助確認，或攜帶 學生證／教職員證（需有學號或證號）及 學校 edu 信箱 到門市，現場即可快速審核，符合資格即可立即購買，把新機帶回家！🍎",
+            "time": "07/17/2026 01:26",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid032AkHic5ysdcCiZc9mRMJdDDeM6x5cDb5fQNdCahAnuNRY3usza6QiMboFjCBAEGil",
+            "views": 29,
+            "reach": 17,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 2,
+            "rate": 0
+          },
+          {
+            "id": "1467850148692664",
+            "title": "一直在等 iPhone 17 Pro Max 的，我可以老實跟你說我的看法。\n\n這檔現折 1120 起，是真的優惠，不是噱頭。如果你手上還有舊機，別讓它放著貶值，帶來門市現場估價，折抵直接算進新機費用裡，省下來的這筆差價，才是你下次升級真正的本錢。資料轉移我們也會陪你處理好，不用自己摸索。\n\n本檔活動：現折 1120 起\n檔期 7/10-7/20，數量有限售完為止。\n\n📍 Apple Shop 高雄右昌｜高雄市楠梓區\n\n#限時優惠 #Apple優惠 #iPhone17ProMax #iPhone舊換新 #高雄右昌 #AppleShop",
+            "time": "07/09/2026 23:28",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02wjfcbXSWVLWDwgj7GaqUNFYi5ns2fiho9UJhNgVQGpf4vE1n6QiFazYLQ4MQCqkml",
+            "views": 91,
+            "reach": 45,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 4,
+            "rate": 0
+          },
+          {
+            "id": "1463427985801547",
+            "title": "學生、教職員想入手 Mac、iPad，這樣買最划算。🎓\n\n教育價有專屬價格，多款機型適用；再搭分期把月付壓低，開學前換機壓力小很多。記得帶證件，資格現場就能確認。\n\n不確定符不符合？把問題帶來門市，我們一次幫你算清楚。\n\n📍 Apple Shop 高雄右昌｜楠梓德民路837號 2樓\n\n#教育價 #Mac #iPad #iPhone分期 #高雄右昌 #AppleShop",
+            "time": "07/04/2026 23:18",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02UKMAm3MHjQPF5y67wjfYzuT6TP4troP3yjWDq6USL1E3AHnSMQX4KKyxLgYHFUMCl",
+            "views": 61,
+            "reach": 29,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 1,
+            "rate": 0
+          },
+          {
+            "id": "1460592379418441",
+            "title": "(無標題)",
+            "time": "07/01/2026 20:49",
+            "type": "影片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02iLJsnwEiMa4LVucg7fLGjExnHhZRHHaAhA48PE3LtmU2obnMYJMzPFMxtYpSmYMLl",
+            "views": 32,
+            "reach": 16,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 1,
+            "rate": 0
+          },
+          {
+            "id": "1458161246328221",
+            "title": "(無標題)",
+            "time": "06/29/2026 03:25",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0nsHf4BYBJP1EKBxf1fHEgurGtjbcHacYZKsmn3WgmAYSVFjSGnBtRbs7mdNh41GYl",
+            "views": 104,
+            "reach": 57,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 2,
+            "rate": 0
+          },
+          {
+            "id": "1457318936412452",
+            "title": "燦坤右昌 Apple Shop 更新了封面相片。",
+            "time": "06/28/2026 04:24",
+            "type": "相片",
+            "link": "https://www.facebook.com/photo.php?fbid=1457318936412452&set=a.233596422118049&type=3",
+            "views": 1,
+            "reach": 1,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1457151083095904",
+            "title": "燦坤右昌 Apple Shop 更新了大頭貼照。",
+            "time": "06/27/2026 23:41",
+            "type": "相片",
+            "link": "https://www.facebook.com/photo.php?fbid=1457151083095904&set=a.233596418784716&type=3",
+            "views": 42,
+            "reach": 19,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1451129207031425",
+            "title": "想買 iPad，但機型一堆不知道挑哪台？\n\n看用途就好挑：追劇上網選基本款、做筆記搭 Apple Pencil、畫圖剪片就選效能更好的機型。學生還能用教育價更划算。買錯規格很可惜。\n\n來門市，回答三個問題，我們幫你選到最適合的那台 iPad。\n\n📍 Apple Shop 高雄右昌｜楠梓德民路837號 2樓\n\n#iPad推薦 #iPad怎麼選 #教育價 #高雄右昌 #AppleShop",
+            "time": "06/21/2026 04:35",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02Ks72nVz685wC1iCqu3btxPg4PfmwCe6BbaBpWVm6S5ExeJuAheAC835ExNMxjzuQl",
+            "views": 54,
+            "reach": 28,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 2,
+            "rate": 0
+          },
+          {
+            "id": "1451054257038920",
+            "title": "🔥【Apple 夏日優惠開跑】🔥\n📅 活動期間｜06/19－07/09\n📍 燦坤右昌 Apple Shop\n\n想換新機的朋友別錯過！\n\n📱 iPhone 系列\n▪️ iPhone 17e 現折約 4%，再送市價 $1,280 保護貼\n▪️ iPhone 17 現折約 5%，再送市價 $1,290 保護貼\n▪️ iPhone Air 現折約 7%\n▪️ iPhone 17 Pro 現折約 2%，再送市價 $790 保護貼\n▪️ iPhone 17 Pro Max 現折約 2%，再送市價 $1,499 UAG 保護殼貼組\n\n💻 Mac 系列\n▪️ MacBook Neo 滿萬元送 $200 配件金\n▪️ MacBook Air M5 滿萬元送 $300 配件金\n▪️ MacBook Pro M5 指定機型優惠，滿萬元送 $500 配件金\n▪️ iMac M4 現折 4%\n▪️ Studio Display 現折 4%\n\n📚 iPad 系列\n▪️ iPad 11 吋優惠價 $9,999 起\n▪️ iPad mini 7 現折 5%\n▪️ iPad Air M4 現折 6% 起\n▪️ iPad Pro M5 現折 8%\n\n⌚ Apple Watch 系列\n▪️ Apple Watch SE 3 現折 7%\n▪️ Apple Watch S11 現折 7%\n▪️ Apple Watch Ultra 3 現折 8%\n\n♻️ 舊機換新機\n現場免費估價，舊機直接折抵新機價款，換機更輕鬆！\n\n📍 燦坤右昌 Apple Shop\n🏠 高雄市楠梓區德民路836號2樓\n☎️ 07-3643207\n\n**價格如有誤標，以現場價格為主！！\n\n#Apple #iPhone17 #MacBook #iPad #AppleWatch #舊換新 #燦坤右昌AppleShop",
+            "time": "06/21/2026 02:40",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02P6AuxAqe7Tsu4bzLVWaN3KVFYCkLqEAfjjuc3r2r8LpvB7GbWNgxycUUvEmEJa3l",
+            "views": 106,
+            "reach": 48,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 4,
+            "rate": 0
+          },
+          {
+            "id": "1439677201509959",
+            "title": "(無標題)",
+            "time": "06/08/2026 04:47",
+            "type": "影片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0xryWywfu66VxEAfpp2rTk1eZAAmXaDKAa6Jan66T4hDHhWPBPvZbzvHGFTuexGwul",
+            "views": 54,
+            "reach": 18,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 1,
+            "rate": 0
+          },
+          {
+            "id": "1432245992253080",
+            "title": "2026.5.29~2026.5.31 右昌店 \nApple 限購激安 72hrs 中獎名單如下 \n\nApple AirPods 4 主動式降噪  (共1名) ：\n姓名：王XX  電話號碼：09XXXXX294\n發票號碼：AL-90174659\n\nApple AirTag 一件裝（共1名)\n姓名：何XX  電話號碼：09XXXXX986\n發票號碼：AL-90179307\n\n大通 USB-C to C 3.2 Gen2 編織傳輸線 2M -灰（共1名)\n姓名：李XX  電話號碼：09XXXXX313\n發票號碼：AL-90179455\n\n注意事項：\n請中獎者本人攜帶身分證及發票在 2026/6/3 20:30 \n前到 燦坤右昌門市 領取獎品，逾時視同放棄。\n感謝大家配合。\n\n燦坤右昌店 Apple Shop\n地址：高雄市楠梓區德民836號2樓\n電話 :07-3643207\n營業時間：每日 11:00-21:30",
+            "time": "05/31/2026 06:38",
+            "type": "文字",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0AbaCexSSHBrUSHH234yFGgEEwsWeEDVfQGTBRRZmGrrJMgwfq4N4Af5XNzbLsuiYl",
+            "views": 120,
+            "reach": 67,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1432231345587878",
+            "title": "202605Apple激安72小時抽獎囉！",
+            "time": "05/31/2026 06:18",
+            "type": "文字",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0tipeCH1VbrYipg5uuyUPCGWXbiYB6vEoJYUdBWFYSB7Ad7hvbSCvwdyxtVGnEZRml",
+            "views": 113,
+            "reach": 57,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 1,
+            "rate": 0
+          },
+          {
+            "id": "1431063189038027",
+            "title": "(無標題)",
+            "time": "05/29/2026 23:20",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0VNqQBbofgGH3BUsRKdHPBtBGXao73QMZ7u4j2Yh8GZsaboeYUK9VFjKfwRF1fJZsl",
+            "views": 68,
+            "reach": 31,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1429432482534431",
+            "title": "⚡ Apple Shop 本店限定｜72 小時激安限購 ⚡\nMac / iPhone / iPad / Apple Watch 限時優惠開跑🔥\n📅 活動時間｜5/29－5/31\n📍 三天門市限定，每人每款限購乙台\n✨ 舊換新最高再加碼 15%\n✨ 全額教育價也可享優惠\n🔥 限時折扣優惠\n▪ MacBook Air M5｜96 折\n▪ MacBook Pro M5｜95 折\n▪ Apple Watch SE3 / S11｜92 折\n▪ iPhone 17｜95 折\n▪ iPhone 17 Pro｜96 折\n▪ iPhone Air｜92 折\n▪ iPad A16｜91 折\n▪ iPad Air M4｜94 折\n▪ iPad Pro M5｜91 折\n🎁 消費滿額再抽好禮\n▪ AirPods 4 降噪款 x1（市價 $5,990）\n▪ AirTag 2 一入組 x1（市價 $990）\n▪ 大通 USB-C 編織傳輸線 2M x1（市價 $590）\n⚠️ 客製機不享有以上優惠活動\n數量有限，售完為止\n歡迎私訊詢問規格、容量、顏色與現貨狀況 📩",
+            "time": "05/28/2026 03:08",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02rX9vE8pnuUDce3atoGXPs7HmeZfMJoRpmkt2MYbsMkjq2Q6nH5P4uuaMfDjui6MEl",
+            "views": 123,
+            "reach": 55,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 8,
+            "rate": 0
+          },
+          {
+            "id": "1429176935893319",
+            "title": "(無標題)",
+            "time": "05/27/2026 20:09",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02ULYsQWHunTZRWGsX1cuAdBzZAfXF78gtGmZtQjTMQaZNiuCFcT2ZQ9XoynbSspCxl",
+            "views": 52,
+            "reach": 22,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 1,
+            "rate": 0
+          },
+          {
+            "id": "1414670914010588",
+            "title": "(無標題)",
+            "time": "05/11/2026 00:34",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02MRK4yuPvxHzjFt4RGFSFgTbXQRmRUuju4BAu9GUwTgb4cAJiXh3d4BWKbgpoSQ99l",
+            "views": 99,
+            "reach": 51,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 9,
+            "rate": 0
+          },
+          {
+            "id": "1400126288798384",
+            "title": "(無標題)",
+            "time": "04/23/2026 22:33",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02D9mf5zMYV6p9z4sRz97LHdy3CgNnp4u1auGXfY38FrwZE6zt8g4vizTMedit8gbUl",
+            "views": 70,
+            "reach": 29,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 1,
+            "rate": 0
+          },
+          {
+            "id": "1391083406369339",
+            "title": "(無標題)",
+            "time": "04/12/2026 22:22",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02oc6d5e8mdRtuwGP44xrNsvjt4YAczsvLzSaHs4cLnA7RsYtKvnoFBTKwyQc9txTol",
+            "views": 86,
+            "reach": 38,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1388966896580990",
+            "title": "🎉【04/10 – 04/20 會員特典】\n🔥 多款 Apple 商品限時優惠\n🌟 主打商品\n📱 iPhone 17 Pro 256G ➝ $38,606\n🎁 送 UAG 保護殼貼組（售價 $1,499）（限量 300）\n📲 iPad Pro 11 吋 M5 256G ➝ $30,928\n🎁 送磁吸藍光類紙膜（售價 $980）（限量 100）\n🎓 符合教育價資格可折抵\n\n⏰ 限量優惠\n📲 iPad A16 WiFi 128G ➝ $9,999\n⌚ Apple Watch SE3 GPS 40mm ➝ $7,268\n🎧 AirPods Pro 3 ➝ $6,890\n🎧 AirPods 4（降噪）➝ $5,280\n\n💳 付款優惠\n✔ 指定銀行分期 0 利率\n✔ 使用燦坤聯名卡實體卡\n滿 $10,000（不分期）現折 $550\n滿 $37,000（分期）現折 $1,500\n\n🔄 本店購買享免費移機\n🎓 Mac / iPad 符合教育價資格可折抵\n📍 門市限定活動\n📩 歡迎私訊或到店詢問",
+            "time": "04/10/2026 04:39",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02sSffoSeMot7ufiFYpgNZQgFd7WeNTG45xGHtBu1t5J8XGwAwZX5jKqh9dVakcVSkl",
+            "views": 158,
+            "reach": 87,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 11,
+            "rate": 0
+          },
+          {
+            "id": "1388684253275921",
+            "title": "(無標題)",
+            "time": "04/09/2026 20:01",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02vUVi7jmWV4nzBv2ZAeYas8yakUGSkvN9f3on5R94PBwYp2VqWYUR9dvnoAo9LKs8l",
+            "views": 51,
+            "reach": 27,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 3,
+            "rate": 0
+          },
+          {
+            "id": "1388111116666568",
+            "title": "(無標題)",
+            "time": "04/09/2026 02:31",
+            "type": "影片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0buuMu4VQ3oaTq7z2rs3mSW8bAPwSJrnRbeksj9ija7kTT8KxZCKEBWa7j5KV6CNQl",
+            "views": 12,
+            "reach": 15,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1388056296672050",
+            "title": "燦坤右昌 Apple Shop 更新了近況。",
+            "time": "04/09/2026 00:47",
+            "type": "文字",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0UDLscMNwwkxo8CLvrwFVbZHzuDNJVy6Y4stZrjfHasWRgJyFCMicR88Bodf8SBXvl",
+            "views": 9,
+            "reach": 17,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1388055536672126",
+            "title": "燦坤右昌 Apple Shop 更新了近況。",
+            "time": "04/09/2026 00:46",
+            "type": "文字",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0zE3U8g6jE6Bs12D8HfwE1ZWRKGTEyei4yN2jjxpvtVay21gYH3Rnbf58zVU77H4al",
+            "views": 9,
+            "reach": 23,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1381600990650914",
+            "title": "(無標題)",
+            "time": "04/01/2026 01:37",
+            "type": "影片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid032eVAx5njgQHGFXWE7bDpSpG6c4DTMZoZWC5k9zRkooNC8T7oPCg7hLMBE6hnc1Yfl",
+            "views": 11,
+            "reach": 17,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1375737197903960",
+            "title": "(無標題)",
+            "time": "03/25/2026 01:00",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid05Gj9X3gtguc5wjVtpDJZsp4L3uw31biGutXgXW7wZur4gWx5C95idaYUxVCZNzCzl",
+            "views": 49,
+            "reach": 26,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1345068924304121",
+            "title": "(無標題)",
+            "time": "02/16/2026 00:54",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02y1iC8w9hvhS3tFuc69T56gzEQJzAB1Y6wW6uF5znJW7L8Rz4s9ZNq2KZsZqBST7Vl",
+            "views": 73,
+            "reach": 44,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1345038174307196",
+            "title": "【春節營業時間公告】\n春節期間燦坤全台門市不打烊❗❗\n各種優惠活動也不缺席，有任何需求就到燦坤3C家電🥰\n󠀠󠀠󠀠󠀠\n#營業時間\n🧨春節期間燦坤全台門市均 正！常！營！業！\n小提醒：2/16(一)除夕營業至16:30；2/17(二) 初一14:30開始營業\n🧨燦坤線上購物大型家電安裝、網路下單門市預約取貨均正常服務\n󠀠󠀠󠀠󠀠\n感謝大家過去一年對燦坤溪湖店的支持\n未來也要請大家多多關照呦😍\n先預祝大家 馬年行大運，新的一年好運滾滾來🧧\n\n💕燦坤用心為您服務💕\n燦坤溪湖店全體同仁\n誠摯歡迎您的蒞臨.🎉😄\n\n🏘#燦坤右昌AppleShop - 購物最佳首選🌻🌻🏘\n🏠：燦坤右昌店\n⏰:AM:11:00~PM9:30\n☎：(07)364-3207\n📌：高雄市楠梓區德民路836\n💳：刷卡分期/行動支付/條碼支付\n\n#用💕的經營 #安💕的購物 #貼💕的服務 #放💕把需求交給燦坤 放心成家 顯示較少",
+            "time": "02/15/2026 23:59",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02eYFVSZSqh1aThRV8Fy1XfyQKWKrnTdoDt3NvWUFmk4CXANNbWj6KLmxY8QkD4zREl",
+            "views": 267,
+            "reach": 100,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1328838382593842",
+            "title": "(無標題)",
+            "time": "01/28/2026 04:31",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid027tXc9XsTgxFMReSU9kohePuPBghJtvTvTrh7qtEZmEnneqZJHhdZcL6YgJ2DTACil",
+            "views": 114,
+            "reach": 51,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 6,
+            "rate": 0
+          },
+          {
+            "id": "1328838259260521",
+            "title": "(無標題)",
+            "time": "01/28/2026 04:31",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid036ne3jkT9AU7j2rZAGCXUyfupdWsRvhyumjKx9Uvm3excKz4vefjCTSAFAeQe8NSel",
+            "views": 101,
+            "reach": 48,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 6,
+            "rate": 0
+          },
+          {
+            "id": "1328838159260531",
+            "title": "(無標題)",
+            "time": "01/28/2026 04:31",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02KAhQakNaTsq3uj8pyc3DUS7V5SrCojJfu8n2toyj8iWTLdJjMdL2DTz1QpNScov4l",
+            "views": 77,
+            "reach": 37,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 2,
+            "rate": 0
+          },
+          {
+            "id": "1328838015927212",
+            "title": "(無標題)",
+            "time": "01/28/2026 04:31",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0b9ZgUn4u8Y5sKejy5tdhTaC1HPnD14G1uc4fn6ACZq6LP6e4XQpyJayY5wLoi1vel",
+            "views": 54,
+            "reach": 30,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1328837932593887",
+            "title": "(無標題)",
+            "time": "01/28/2026 04:31",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid02pBjXYpxFjLHjQYDMRL9okVZs8vyMdrsEjZ9CnHELef7xkU7vbrjKqzDpARtFDLZAl",
+            "views": 56,
+            "reach": 32,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 0,
+            "rate": 0
+          },
+          {
+            "id": "1328629442614736",
+            "title": "(無標題)",
+            "time": "01/27/2026 23:18",
+            "type": "相片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid0aD4u2QpG2ypkbJ5opoayLz1nWq7kRWAN8Dp29pj4TJyGHc5Tsc3NDKJgyw5gKQbYl",
+            "views": 59,
+            "reach": 41,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 1,
+            "rate": 0
+          },
+          {
+            "id": "1326860062791674",
+            "title": "(無標題)",
+            "time": "01/25/2026 22:36",
+            "type": "影片",
+            "link": "https://www.facebook.com/AppleShop027/posts/pfbid022nZxkJYDoqAfvNihFBn2fPSPbKfNHP1Gn5aBehEsaKKMo89eHgdPscQr4a2hgwA4l",
+            "views": 1,
+            "reach": 30,
+            "total": 0,
+            "react": 0,
+            "comment": 0,
+            "share": 0,
+            "click": 2,
+            "rate": 0
+          }
+        ],
+        "postsUpdated": "2026-07-18T07:52:18.636Z"
+      },
       "ig": {},
-      "google": {}
+      "google": {
+        "perf": {
+          "businessName": "Apple Shop 高雄右昌蘋果店(教育價/舊換新)Apple店中店",
+          "address": "811高雄市楠梓區德民路836號2樓",
+          "searchMobile": 31665,
+          "searchDesktop": 13980,
+          "mapMobile": 15738,
+          "mapDesktop": 1259,
+          "calls": 504,
+          "messages": 0,
+          "bookings": 0,
+          "directions": 865,
+          "websiteClicks": 159
+        },
+        "perfUpdated": "2026-07-18T07:53:32.933Z",
+        "profile": {
+          "businessName": "Apple Shop 高雄右昌蘋果店(教育價/舊換新)Apple店中店",
+          "address": "楠梓區",
+          "phone": "07 364 3207",
+          "website": "https://page.line.me/vil0878v",
+          "category": "3C 賣場",
+          "hoursMon": "11:00-21:30",
+          "hoursTue": "11:00-21:30",
+          "hoursWed": "11:00-21:30",
+          "hoursThu": "11:00-21:30",
+          "hoursFri": "11:00-21:30",
+          "hoursSat": "11:00-21:30",
+          "hoursSun": "11:00-21:30"
+        },
+        "profileUpdated": "2026-07-18T07:53:32.934Z",
+        "keywords": [
+          {
+            "word": "apple",
+            "count": 10000
+          },
+          {
+            "word": "燦坤",
+            "count": 3792
+          },
+          {
+            "word": "apple store",
+            "count": 3170
+          },
+          {
+            "word": "蘋果",
+            "count": 2973
+          },
+          {
+            "word": "iphone",
+            "count": 1614
+          },
+          {
+            "word": "mac",
+            "count": 1442
+          },
+          {
+            "word": "istore",
+            "count": 467
+          },
+          {
+            "word": "apple watch",
+            "count": 444
+          },
+          {
+            "word": "蘋果手機",
+            "count": 356
+          },
+          {
+            "word": "蘋果17",
+            "count": 349
+          },
+          {
+            "word": "3c",
+            "count": 261
+          },
+          {
+            "word": "手機配件",
+            "count": 254
+          },
+          {
+            "word": "蘋果直營店",
+            "count": 239
+          },
+          {
+            "word": "apple直營店",
+            "count": 207
+          },
+          {
+            "word": "高雄蘋果直營店",
+            "count": 205
+          },
+          {
+            "word": "蘋果電腦",
+            "count": 196
+          },
+          {
+            "word": "iphone 17",
+            "count": 189
+          },
+          {
+            "word": "electronics store",
+            "count": 170
+          },
+          {
+            "word": "高雄apple直營店",
+            "count": 169
+          },
+          {
+            "word": "apple 直 營 門市",
+            "count": 167
+          }
+        ],
+        "keywordsUpdated": "2026-07-18T07:57:09.371Z"
+      }
     },
     "新光華店": {
       "fb": {},
